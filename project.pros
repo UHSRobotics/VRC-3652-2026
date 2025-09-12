@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "Template",
+    "project_name": "839Y Kalahari Code",
     "target": "v5",
     "templates": {
       "LemLib": {
@@ -351,8 +351,9 @@
       }
     },
     "upload_options": {
-      "slot": 3,
-      "icon": "pros"
+      "slot": 1,
+      "icon": "planet",
+      "description": "My PROS Project"
     },
     "use_early_access": false
   }
