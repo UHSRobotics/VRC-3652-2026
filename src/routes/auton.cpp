@@ -13,12 +13,13 @@ void Autonomous::Auton1() {
 
 }
 
-void Autonomous::Auton2() { // Red Side | Mogo Rush | 5 Rings | AWP
+// Red Side | Mogo Rush | 5 Rings | AWP
+void Autonomous::Auton2() { 
 
   chassis.setPose(58.706, -29.938, 90);
   // chassis.setPose(56.585, -57, 135);
 
-//Get First Mogo + Score Preload
+  //Get First Mogo + Score Preload
   chassis.moveToPoint(13, -42, 5000, {.forwards = false, .maxSpeed = 127});
   pros::delay(500);
   mogoClamp.set_value(true);
@@ -29,7 +30,7 @@ void Autonomous::Auton2() { // Red Side | Mogo Rush | 5 Rings | AWP
   IntakeMotor.move_velocity(0);
   IndexerMotor.move_velocity(0);
 
-//Collect Ring Stack
+  //Collect Ring Stack
   chassis.turnToHeading(135, 2000, {.maxSpeed = 127});
   mogoClamp.set_value(false);
   chassis.moveToPoint(18, -53, 5000, {.maxSpeed = 127});
@@ -80,11 +81,9 @@ void Autonomous::Auton2() { // Red Side | Mogo Rush | 5 Rings | AWP
 
 // Blue Left
 void Autonomous::Auton3() {
-
-
 }
 
-// Blue Right mogo side(2 mogos, 1 rings/goal, corner clear)
+// Blue Right Mogo Side(2 Mogos, 1 Rings/Goal, Corner Clear)
 void Autonomous::Auton4() {
   //intake in
   chassis.setPose(180, -60, 0, false);
