@@ -1,10 +1,27 @@
 #include "main.h"
 
-
-pros::MotorGroup left_motors({3, 4});        // left motors normal
+pros::MotorGroup left_motors({3, 4});      // left motors normal
 pros::MotorGroup right_motors({-1, -13}); // reversed
 
 pros::Optical optical_sensor(6);
+
+void movedistance(double distance_mm, int speed) {
+    double wheel_circumference = 220.0; // mm per rotation
+    double ticks_per_rev = 300.0;     
+
+    // convert distance → ticks
+    double target_ticks = (distance_mm / wheel_circumference) * ticks_per_rev;
+
+    // convert ticks → degrees
+    double target_degrees = (target_ticks / ticks_per_rev) * 360.0;
+
+    // reset encoders to 0
+    left_motors.tare_position();
+    right_motors.tare_position();
+
+    left_motors.move_relative(target_degrees, speed);
+    right_motors.move_relative(target_degrees, speed);
+}
 
 void detect_color() {
     optical_sensor.set_led_pwm(100); // Turn on internal LED for lighting
