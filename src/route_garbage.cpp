@@ -1,8 +1,8 @@
 #include "main.h"
+#include "route_garbage.h"
 
 pros::MotorGroup left_motors({3, 4});      // left motors normal
 pros::MotorGroup right_motors({-1, -13}); // reversed
-pros::Controller master(pros::E_CONTROLLER_MASTER);
 
 pros::Optical optical_sensor(6);
 
@@ -83,16 +83,5 @@ void route() {
     }
 }
 
-void control() {
-    while (true) {
-        // When A is pressed, run the route
-        if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A)) {
-            route();
-        }
 
-        master.print(0, 0, "Start Square");
-
-        pros::delay(20); 
-    }
-}
 

@@ -1,4 +1,5 @@
 #include "main.h"
+#include "route_garbage.h"
 
 /**
  * A callback function for LLEMU's center button.
@@ -89,11 +90,11 @@ void opcontrol() {
 		left_mg.move(dir - turn);                      // Sets left motor voltage
 		right_mg.move(dir + turn);                     // Sets right motor voltage
 		pros::delay(20);                               // Run for 20 ms then update
+
+		if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A)){  // Detect if A is pressed then run route, run exactly once per press.
+			route();
+		}
+
+		pros::delay(20);
 	}
-
-	if (master.get_digital(DIGITAL_A)){
-		std::cout << "A is pressed";
-	}
-
-
 }
