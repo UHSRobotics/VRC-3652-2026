@@ -76,8 +76,7 @@ void autonomous() {}
 void opcontrol() {
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
 	pros::MotorGroup left_mg({-3, -4});    // Creates a motor group with reversed ports -3 & -4
-	pros::MotorGroup right_mg({1, 13});  // Creates a motor group with forwards port 1 & 5
-
+	pros::MotorGroup right_mg({1, 13});  // Creates a motor group with forwards port 1 & 13
 
 	while (true) {
 		pros::lcd::print(0, "%d %d %d", (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2,
@@ -91,4 +90,10 @@ void opcontrol() {
 		right_mg.move(dir + turn);                     // Sets right motor voltage
 		pros::delay(20);                               // Run for 20 ms then update
 	}
+
+	if (master.get_digital(DIGITAL_A)){
+		std::cout << "A is pressed";
+	}
+
+
 }
