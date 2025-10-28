@@ -1,5 +1,6 @@
 #include "main.h"
-#include "route_garbage.h"
+#include "lemlib/api.hpp"
+#include "lemlib_settings.h"
 
 /**
  * A callback function for LLEMU's center button.
@@ -75,7 +76,6 @@ void autonomous() {}
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-	pros::Controller master(pros::E_CONTROLLER_MASTER);
 	pros::MotorGroup left_mg({-3, -4});    // Creates a motor group with reversed ports -3 & -4
 	pros::MotorGroup right_mg({1, 13});  // Creates a motor group with forwards port 1 & 13
 
@@ -87,14 +87,8 @@ void opcontrol() {
 		// Arcade control scheme
 		int dir = master.get_analog(ANALOG_LEFT_Y);    // Gets amount forward/backward from left joystick
 		int turn = master.get_analog(ANALOG_RIGHT_X);  // Gets the turn left/right from right joystick
-		left_mg.move(dir - turn);                      // Sets left motor voltage
-		right_mg.move(dir + turn);                     // Sets right motor voltage
+		left_mg.move(dir + turn);                      // Sets left motor voltage
+		right_mg.move(dir - turn);                     // Sets right motor voltage
 		pros::delay(20);                               // Run for 20 ms then update
-
-		if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A)){  // Detect if A is pressed then run route, run exactly once per press.
-			route();
-		}
-
-		pros::delay(20);
 	}
 }

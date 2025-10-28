@@ -1,8 +1,5 @@
 #include "main.h"
-#include "route_garbage.h"
-
-pros::MotorGroup left_motors({3, 4});      // left motors normal
-pros::MotorGroup right_motors({-1, -13}); // reversed
+#include "lemlib_settings.h"
 
 pros::Optical optical_sensor(6);
 
@@ -46,16 +43,6 @@ void detect_color() {
 
 
 void move_forward(int distance_ms){
-    left_motors.move_velocity(100);
-    right_motors.move_velocity(100);
-    pros::delay(distance_ms);
-
-    left_motors.move_velocity(0);
-    right_motors.move_velocity(0);
-    pros::delay(100);
-}
-
-void move_backward(int distance_ms){
     left_motors.move_velocity(-100);
     right_motors.move_velocity(-100);
     pros::delay(distance_ms);
@@ -65,10 +52,20 @@ void move_backward(int distance_ms){
     pros::delay(100);
 }
 
-void turn_right(){
+void move_backward(int distance_ms){
     left_motors.move_velocity(100);
-    right_motors.move_velocity(-100);
-    pros::delay(1000);
+    right_motors.move_velocity(100);
+    pros::delay(distance_ms);
+
+    left_motors.move_velocity(0);
+    right_motors.move_velocity(0);
+    pros::delay(100);
+}
+
+void turn_right(){
+    left_motors.move_velocity(-100);
+    right_motors.move_velocity(100);
+    pros::delay(300);
 
     left_motors.move_velocity(0);
     right_motors.move_velocity(0);
