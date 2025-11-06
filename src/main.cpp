@@ -76,8 +76,8 @@ void autonomous() {}
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-	pros::MotorGroup left_mg({-3, -4});    // Creates a motor group with reversed ports -3 & -4
-	pros::MotorGroup right_mg({1, 13});  // Creates a motor group with forwards port 1 & 13
+	pros::MotorGroup left_mg({-17,18, -20});    // Creates a motor group with reversed ports -3 & -4
+	pros::MotorGroup right_mg({11, -12, 13});  // Creates a motor group with forwards port 1 & 13
 
 	while (true) {
 		pros::lcd::print(0, "%d %d %d", (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2,
