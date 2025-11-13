@@ -1,6 +1,27 @@
+#include <string>
 #include "main.h"
 #include "lemlib/api.hpp"
 #include "lemlib_settings.h"
+
+using namespace std;
+
+string colour_sensor(){
+	col_sen.set_led_pwm(100);
+
+	while (true){
+		double hue = col_sen.get_hue();
+
+		if (hue < 30 || hue > 330){
+			return "RED";
+		}
+		else if (hue > 200 && hue < 260) {
+			return "BLUE";
+		}
+		else {
+			return "I don't know what colour is it";
+		}
+	}
+}
 
 /**
  * A callback function for LLEMU's center button.
@@ -76,8 +97,8 @@ void autonomous() {}
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-	pros::MotorGroup left_mg({-17,18, -20});    // Creates a motor group with reversed ports -3 & -4
-	pros::MotorGroup right_mg({11, -12, 13});  // Creates a motor group with forwards port 1 & 13
+	pros::MotorGroup left_mg({-17,18, -20});    // Will Change it Later
+	pros::MotorGroup right_mg({11, -12, 13});  // Will Change it Later
 
 	while (true) {
 		pros::lcd::print(0, "%d %d %d", (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2,

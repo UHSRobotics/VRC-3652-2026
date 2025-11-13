@@ -5,12 +5,14 @@
 #include "pros/abstract_motor.hpp"
 #include "pros/optical.hpp"
 
+
 inline pros::Controller master(pros::E_CONTROLLER_MASTER);
 
 inline pros::MotorGroup left_motors({-17,18, -20});      // left motors normal
 inline pros::MotorGroup right_motors({11, -12, 13}); // reversed
 
 inline pros::IMU imu(15);
+inline pros::Optical col_sen(10); //Random Colour sensor, port 10 is temp
 
 inline lemlib::Drivetrain drivetrain(&left_motors, // left motor group
                               &right_motors, // right motor group
