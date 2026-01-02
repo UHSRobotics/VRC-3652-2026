@@ -11,8 +11,16 @@ inline pros::Controller master(pros::E_CONTROLLER_MASTER);
 inline pros::MotorGroup left_motors({-17,18, -20});      // left motors normal
 inline pros::MotorGroup right_motors({11, -12, 13}); // reversed
 
+inline pros::MotorGroup intake({6, 7});
+
 inline pros::IMU imu(15);
 inline pros::Optical col_sen(10); //Random Colour sensor, port 10 is temp
+
+inline pros::Rotation horizontal_encoder(2);
+inline pros::Rotation vertical_encoder(1);
+
+inline pros::adi::DigitalOut descore('A', LOW);
+inline pros::adi::DigitalOut match_loader('B', LOW);
 
 inline lemlib::Drivetrain drivetrain(&left_motors, // left motor group
                               &right_motors, // right motor group
@@ -22,8 +30,8 @@ inline lemlib::Drivetrain drivetrain(&left_motors, // left motor group
                               2 // horizontal drift is 2 
 );
 
-inline lemlib::TrackingWheel left_tracking_wheel(&left_motors, lemlib::Omniwheel::NEW_275, -5.75, 450);
-inline lemlib::TrackingWheel right_tracking_wheel(&right_motors, lemlib::Omniwheel::NEW_275, 5.75, 450);
+inline lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_encoder, lemlib::Omniwheel::NEW_275, -5.75);
+inline lemlib::TrackingWheel vertical_tracking_wheel(&vertical_encoder, lemlib::Omniwheel::NEW_275, 5.75);
 
 inline lemlib::ControllerSettings lateral_controller(
     10,   // kP — proportional gain
@@ -49,7 +57,7 @@ inline lemlib::ControllerSettings angular_controller(
     0     // slew rate limit (deg/s)
 );
 
-inline lemlib::OdomSensors sensors(&left_tracking_wheel, &right_tracking_wheel, nullptr, nullptr, &imu); //MIght add horizontal tracking wheel later.
+inline lemlib::OdomSensors sensors(&vertical_tracking_wheel, nullptr, &horizontal_tracking_wheel, nullptr, &imu); //MIght add horizontal tracking wheel later.
 
 inline lemlib::Chassis chassis(
     drivetrain,
