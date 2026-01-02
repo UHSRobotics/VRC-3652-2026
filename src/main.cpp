@@ -116,6 +116,14 @@ void opcontrol() {
 		else{
 			intake.move(0);
 		}
+
+		//outake control
+		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
+			intake.move(-127);
+		}
+		else{
+			intake.move(0);
+		}
 		
 		//match loader control
 		if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L1)){
