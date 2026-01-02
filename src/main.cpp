@@ -97,19 +97,37 @@ void autonomous() {}
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-	pros::MotorGroup left_mg({-17,18, -20});    // Will Change it Later
-	pros::MotorGroup right_mg({11, -12, 13});  // Will Change it Later
+
+	bool descore_state = false;
+	
+	bool loader_state = false;
 
 	while (true) {
-		pros::lcd::print(0, "%d %d %d", (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2,
-		                 (pros::lcd::read_buttons() & LCD_BTN_CENTER) >> 1,
-		                 (pros::lcd::read_buttons() & LCD_BTN_RIGHT) >> 0);  // Prints status of the emulated screen LCDs
-
 		// Arcade control scheme
 		int dir = master.get_analog(ANALOG_LEFT_Y);    // Gets amount forward/backward from left joystick
 		int turn = master.get_analog(ANALOG_RIGHT_X);  // Gets the turn left/right from right joystick
-		left_mg.move(dir + turn);                      // Sets left motor voltage
-		right_mg.move(dir - turn);                     // Sets right motor voltage
-		pros::delay(20);                               // Run for 20 ms then update
+		left_motors.move(dir + turn);                      // Sets left motor voltage
+		right_motors.move(dir - turn);                     // Sets right motor voltage
+
+		//intake control
+		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
+			intake.move(127);
+		}
+		else{
+			intake.move(0);
+		}
+		
+		//match loader control
+		if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L1)){
+			loader_state = !loader_state;
+			match_loader.set_value(loader_state);
+		}
+
+		//descore control
+		if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A)){
+			descore_state = !descore_state;
+			descore.set_value(descore_state);
+		}
+		pros::delay(20); // Run for 20 ms then update
 	}
 }
