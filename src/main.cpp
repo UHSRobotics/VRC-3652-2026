@@ -84,12 +84,23 @@ void competition_initialize() {}
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
+
+ASSET(test_txt);
+
 void autonomous() {
 	chassis.setPose(0, 0, 0);
+
+	chassis.follow(test_txt, 15, 5000);
+
+	chassis.waitUntil(26);
+	intake.move(127);
+
+	chassis.waitUntil(78);
+	intake.move(0);
     // turn to face heading 90 with a very long timeout
     //chassis.turnToHeading(180, 100000);
 	// move 48" forwards
-    chassis.moveToPoint(0, 48, 10000);
+    //chassis.moveToPoint(0, 48, 10000);
 }
 
 /**
