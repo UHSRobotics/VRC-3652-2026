@@ -1,5 +1,5 @@
-#pragma once
-#include "lemlib/chassis/trackingWheel.hpp"
+#pragma once 
+#include "lemlib/chassis/trackingWheel.hpp" 
 #include "main.h"
 #include "lemlib/api.hpp"
 #include "pros/abstract_motor.hpp"
@@ -8,16 +8,16 @@
 
 inline pros::Controller master(pros::E_CONTROLLER_MASTER);
 
-inline pros::MotorGroup left_motors({-15, 19, -20});      // left motors normal
-inline pros::MotorGroup right_motors({16, -11, 14}); // reversed
+inline pros::MotorGroup left_motors({13,-16, -14});      // left motors normal
+inline pros::MotorGroup right_motors({-11, 1, 17}); // reversed
 
-inline pros::MotorGroup intake({9, 17});
+inline pros::MotorGroup intake({-19, 20});
 
-inline pros::IMU imu(10);
-inline pros::Optical col_sen(3); //Random Colour sensor, port 10 is temp
+inline pros::IMU imu(15);
+inline pros::Optical col_sen(3); //Random Colour sensor, port 3 is temp
 
-inline pros::Rotation horizontal_encoder(2);
-inline pros::Rotation vertical_encoder(1);
+inline pros::Rotation horizontal_encoder(19);
+inline pros::Rotation vertical_encoder(-10);
 
 inline pros::adi::DigitalOut descore('A', LOW);
 inline pros::adi::DigitalOut match_loader('B', LOW);
@@ -30,31 +30,31 @@ inline lemlib::Drivetrain drivetrain(&left_motors, // left motor group
                               2 // horizontal drift is 2 
 );
 
-inline lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_encoder, lemlib::Omniwheel::NEW_275, -5.75);
-inline lemlib::TrackingWheel vertical_tracking_wheel(&vertical_encoder, lemlib::Omniwheel::NEW_275, 5.75);
+inline lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_encoder, lemlib::Omniwheel::NEW_275, -0.5);
+inline lemlib::TrackingWheel vertical_tracking_wheel(&vertical_encoder, lemlib::Omniwheel::NEW_275, -0.4);
 
 inline lemlib::ControllerSettings lateral_controller(
-    10,   // kP — proportional gain
+    6,   // kP — proportional gain
     0,    // kI — integral gain
     3,    // kD — derivative gain
-    3,    // anti-windup
-    1,    // small error range (in)
-    100,  // small error timeout (ms)
-    3,    // large error range (in)
-    500,  // large error timeout (ms)
-    10    // slew rate limit (in/s)
+    3, // anti windup
+    1, // small error range, in inches
+    100, // small error range timeout, in milliseconds
+    3, // large error range, in inches
+    500, // large error range timeout, in milliseconds
+    20 // maximum acceleration (slew)
 );
 
 inline lemlib::ControllerSettings angular_controller(
-    2,    // kP — proportional gain
+    4.15,    // kP — proportional gain
     0,    // kI — integral gain
-    10,   // kD — derivative gain
-    3,    // anti-windup
-    1,    // small error range (deg)
-    100,  // small error timeout (ms)
-    3,    // large error range (deg)
-    500,  // large error timeout (ms)
-    0     // slew rate limit (deg/s)
+    29.5,   // kD — derivative gain
+    3, // anti windup
+    1, // small error range, in inches
+    100, // small error range timeout, in milliseconds
+    3, // large error range, in inches
+    500, // large error range timeout, in milliseconds
+    0 // maximum acceleration (slew)
 );
 
 inline lemlib::OdomSensors sensors(&vertical_tracking_wheel, nullptr, &horizontal_tracking_wheel, nullptr, &imu); //MIght add horizontal tracking wheel later.

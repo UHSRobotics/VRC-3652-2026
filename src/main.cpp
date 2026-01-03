@@ -50,6 +50,9 @@ void initialize() {
 	pros::lcd::set_text(1, "Hello PROS User!");
 
 	pros::lcd::register_btn1_cb(on_center_button);
+
+	chassis.calibrate();
+	chassis.setPose(0, 0, 0);
 }
 
 /**
@@ -81,7 +84,13 @@ void competition_initialize() {}
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-void autonomous() {}
+void autonomous() {
+	chassis.setPose(0, 0, 0);
+    // turn to face heading 90 with a very long timeout
+    //chassis.turnToHeading(180, 100000);
+	// move 48" forwards
+    chassis.moveToPoint(0, 48, 10000);
+}
 
 /**
  * Runs the operator control code. This function will be started in its own task
@@ -103,6 +112,10 @@ void opcontrol() {
 	bool loader_state = false;
 
 	while (true) {
+		
+		pros::lcd::set_text(1, "Hello PROS User!");
+		master.print(0,0,"%f",chassis.getPose().y);
+
 		// Arcade control scheme
 		int dir = master.get_analog(ANALOG_LEFT_Y);    // Gets amount forward/backward from left joystick
 		int turn = master.get_analog(ANALOG_RIGHT_X);  // Gets the turn left/right from right joystick
@@ -113,18 +126,13 @@ void opcontrol() {
 		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
 			intake.move(127);
 		}
-		else{
-			intake.move(0);
-		}
-
-		//outake control
-		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
+		else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
 			intake.move(-127);
 		}
 		else{
 			intake.move(0);
 		}
-		
+
 		//match loader control
 		if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L1)){
 			loader_state = !loader_state;
