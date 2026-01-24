@@ -8,10 +8,10 @@
 
 inline pros::Controller master(pros::E_CONTROLLER_MASTER);
 
-inline pros::MotorGroup left_motors({13,-16, -14});      // left motors normal
-inline pros::MotorGroup right_motors({-11, 1, 17}); // reversed
+inline pros::MotorGroup left_motors({-8,9, -11});      // left motors normal
+inline pros::MotorGroup right_motors({15, 18, -17}); // reversed
 
-inline pros::MotorGroup intake({-19, 20});
+inline pros::MotorGroup intake({1, -14});
 
 inline pros::IMU imu(15);
 inline pros::Optical col_sen(3); //Random Colour sensor, port 3 is temp
