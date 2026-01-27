@@ -3,6 +3,7 @@
 #include "lemlib/api.hpp"
 #include "lemlib_settings.h"
 #include "lemlib-tarball/api.hpp"
+#include "intake.hpp"
 
 using namespace std;
 
@@ -52,6 +53,8 @@ void initialize() {
 
 	pros::lcd::register_btn1_cb(on_center_button);
 
+	pros::Task intake_task(intakeTask);
+
 	chassis.calibrate();
 	chassis.setPose(0, 0, 0);
 }
@@ -91,7 +94,12 @@ lemlib_tarball::Decoder decoder(test_txt);
 
 void autonomous() {
     chassis.setPose(0, 0, 0);
+    // turn to face heading 90 with a very long timeout
+    //chassis.turnToHeading(90, 100000);
+    // move 48" forwards
+    //chassis.moveToPoint(0, 48, 10000);
 
+	/*
     chassis.follow(decoder["Path1"], 15, 5000);
 
     chassis.waitUntil(26);
@@ -101,10 +109,7 @@ void autonomous() {
     intake.move(0);
 
     chassis.follow(decoder["Path2"], 15, 5000);
-    // turn to face heading 90 with a very long timeout
-    //chassis.turnToHeading(180, 100000);
-    // move 48" forwards
-    //chassis.moveToPoint(0, 48, 10000);
+	*/
 }
 
 /**
@@ -126,6 +131,10 @@ void opcontrol() {
 	
 	bool loader_state = false;
 
+	descore.set_value(descore_state);
+
+	match_loader.set_value(loader_state);
+
 	while (true) {
 		
 		pros::lcd::set_text(1, "Hello PROS User!");
@@ -139,17 +148,22 @@ void opcontrol() {
 
 		//intake control
 		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
-			intake.move(127);
+			forwardIntakeHood();
 		}
 		else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
-			intake.move(-127);
+			reverseIntakeHood();
+		}
+		else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
+			forwardIntake();
+		} else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
+			reverseIntake();
 		}
 		else{
-			intake.move(0);
+			stopIntake();
 		}
 
 		//match loader control
-		if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L1)){
+		if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B)){
 			loader_state = !loader_state;
 			match_loader.set_value(loader_state);
 		}
