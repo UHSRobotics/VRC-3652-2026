@@ -89,6 +89,6 @@ inline void reverseIntake(){
 }
 
 // move intake and hood forward and prevent it from being stuck
-inline void intakeAuton(){
+inline void forwardIntakeHoodAuton(){
     intakeState.store(3);
 }
