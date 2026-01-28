@@ -8,20 +8,22 @@
 
 inline pros::Controller master(pros::E_CONTROLLER_MASTER);
 
-inline pros::MotorGroup left_motors({-8,9, -11});      // left motors normal
-inline pros::MotorGroup right_motors({15, 18, -17}); // reversed
+inline pros::MotorGroup left_motors({13,-12, -11});      // left motors normal
+inline pros::MotorGroup right_motors({-16, 17, 18}); // reversed
 
-inline pros::Motor intake(-21);
+inline pros::Motor intake(-3);
 inline pros::Motor hood(1);
 
 inline pros::IMU imu(4);
 inline pros::Optical col_sen(3); //Random Colour sensor, port 3 is temp
 
-inline pros::Rotation horizontal_encoder(5);
-inline pros::Rotation vertical_encoder(-6);
+inline pros::Rotation horizontal_encoder(19);
+inline pros::Rotation vertical_encoder(-20);
 
-inline pros::adi::DigitalOut descore('A', LOW);
-inline pros::adi::DigitalOut match_loader('B', LOW);
+// trapdoor A
+inline pros::adi::DigitalOut trapdoor('A', LOW);
+inline pros::adi::DigitalOut descore('B', LOW);
+inline pros::adi::DigitalOut match_loader('C', LOW);
 
 inline lemlib::Drivetrain drivetrain(&left_motors, // left motor group
                               &right_motors, // right motor group

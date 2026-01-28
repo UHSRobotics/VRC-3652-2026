@@ -49,11 +49,11 @@ inline void intakeTask(void *param) {
                 break;
             case 2:
                 intake.move(127);
-                hood.move(0);
+                hood.move(-5);
                 break;
             case -2:
                 intake.move(-127);
-                hood.move(0);
+                hood.move(-5);
                 break;
             case 3:
                 preventStuck();
