@@ -4,6 +4,7 @@
 #include "lemlib_settings.h"
 #include "lemlib-tarball/api.hpp"
 #include "intake.hpp"
+#include "routes.hpp"
 
 using namespace std;
 
@@ -89,9 +90,6 @@ void competition_initialize() {}
  * from where it left off.
  */
 
-ASSET(test_txt);
-lemlib_tarball::Decoder decoder(test_txt);
-
 void autonomous() {
     chassis.setPose(0, 0, 0);
     // turn to face heading 90 with a very long timeout
@@ -99,17 +97,7 @@ void autonomous() {
     // move 48" forwards
     //chassis.moveToPoint(0, 48, 10000);
 
-	/*
-    chassis.follow(decoder["Path1"], 15, 5000);
-
-    chassis.waitUntil(26);
-    intake.move(127);
-
-    chassis.waitUntil(78);
-    intake.move(0);
-
-    chassis.follow(decoder["Path2"], 15, 5000);
-	*/
+    //skills();
 }
 
 /**
