@@ -42,6 +42,38 @@ void on_center_button() {
 	}
 }
 
+
+
+void drawButtons(){
+	Brain.Screen.clearScreen();
+
+	Brain.Screen.drawRectangle(10, 50, 200, 100, color::red);
+    Brain.Screen.printAt(60, 105, "Skills");
+	
+	Brain.Screen.drawRectangle(260, 50, 200, 100, color::blue);
+    Brain.Screen.printAt(310, 105, "Auton2");
+}
+
+void autonSelect(){
+	drawButtons();
+	while(true){
+		if(Brain.Screen.pressing()){
+			int touchX = Brain.Screen.xPosition();
+			int touchY = Brain.Screen.yPosition();
+			if (touchX > 10 && touchX < 210 && touchY > 50 && touchY < 150) {
+                Brain.Screen.printAt(10, 200, "SELECTED: Skills");
+				skills();
+            } 
+            // Check Right Button
+            else if (touchX > 260 && touchX < 460 && touchY > 50 && touchY < 150) {
+                Brain.Screen.printAt(10, 200, "SELECTED: Auton2");
+
+            }
+		}
+		pros::delay(20)
+	}
+}
+
 /**
  * Runs initialization code. This occurs as soon as the program is started.
  *
@@ -51,13 +83,15 @@ void on_center_button() {
 void initialize() {
 	pros::lcd::initialize();
 	pros::lcd::set_text(1, "Hello PROS User!");
-
+	
 	pros::lcd::register_btn1_cb(on_center_button);
 
 	pros::Task intake_task(intakeTask);
 
 	chassis.calibrate();
 	chassis.setPose(0, 0, 0);
+
+	autonSelect();
 }
 
 /**
@@ -129,8 +163,8 @@ void opcontrol() {
 		master.print(0,0,"%f",chassis.getPose().y);
 
 		// Arcade control scheme
-		int dir = master.get_analog(ANALOG_LEFT_Y);    // Gets amount forward/backward from left joystick
-		int turn = master.get_analog(ANALOG_RIGHT_X);  // Gets the turn left/right from right joystick
+		int dir = master.get_analog(ANALOG_LEFT_Y)*-1;    // Gets amount forward/backward from left joystick
+		int turn = master.get_analog(ANALOG_LEFT_X);  // Gets the turn left/right from right joystick
 		left_motors.move(dir + turn);                      // Sets left motor voltage
 		right_motors.move(dir - turn);                     // Sets right motor voltage
 
