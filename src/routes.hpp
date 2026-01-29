@@ -14,6 +14,8 @@ ASSET(skills_txt);
 inline lemlib_tarball::Decoder decoder_skills(skills_txt);
 
 inline void skills(){
+    chassis.setPose(-43.905, 0.196, 0);
+
     //--Closer side-- 
     chassis.follow(decoder_skills["Path0"], 15, 5000);
     match_loader.set_value(true); // match loader down

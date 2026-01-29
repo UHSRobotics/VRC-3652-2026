@@ -91,13 +91,13 @@ void competition_initialize() {}
  */
 
 void autonomous() {
-    chassis.setPose(0, 0, 0);
+    //chassis.setPose(0, 0, 0);
     // turn to face heading 90 with a very long timeout
     //chassis.turnToHeading(90, 100000);
     // move 48" forwards
     //chassis.moveToPoint(0, 48, 10000);
 
-    //skills();
+    skills();
 }
 
 /**
