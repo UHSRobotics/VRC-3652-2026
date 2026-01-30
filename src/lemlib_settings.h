@@ -21,9 +21,11 @@ inline pros::Rotation horizontal_encoder(19);
 inline pros::Rotation vertical_encoder(-20);
 
 // trapdoor A
-inline pros::adi::DigitalOut trapdoor('A', LOW);
+inline pros::adi::DigitalOut match_loader_1('C', LOW);
+inline pros::adi::DigitalOut match_loader_2('A', LOW);
 inline pros::adi::DigitalOut descore('B', LOW);
-inline pros::adi::DigitalOut match_loader('C', LOW);
+//inline pros::adi::DigitalOut trapdoor('A', LOW);
+
 
 inline lemlib::Drivetrain drivetrain(&left_motors, // left motor group
                               &right_motors, // right motor group

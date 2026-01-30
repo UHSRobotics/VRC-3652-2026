@@ -4,6 +4,8 @@
 #include "lemlib_settings.h"
 #include "lemlib-tarball/api.hpp"
 #include "intake.hpp"
+#include "pros/colors.hpp"
+#include "pros/screen.hpp"
 #include "routes.hpp"
 
 using namespace std;
@@ -26,52 +28,38 @@ string colour_sensor(){
 	}
 }
 
-/**
- * A callback function for LLEMU's center button.
- *
- * When this callback is fired, it will toggle line 2 of the LCD text between
- * "I was pressed!" and nothing.
- */
-void on_center_button() {
-	static bool pressed = false;
-	pressed = !pressed;
-	if (pressed) {
-		pros::lcd::set_text(2, "I was pressed!");
-	} else {
-		pros::lcd::clear_line(2);
-	}
-}
-
-
+int auton_select = 0;
 
 void drawButtons(){
-	Brain.Screen.clearScreen();
-
-	Brain.Screen.drawRectangle(10, 50, 200, 100, color::red);
-    Brain.Screen.printAt(60, 105, "Skills");
-	
-	Brain.Screen.drawRectangle(260, 50, 200, 100, color::blue);
-    Brain.Screen.printAt(310, 105, "Auton2");
+    pros::screen::erase();
+    pros::screen::set_pen(pros::Color::red);
+    pros::screen::fill_rect(10, 50, 210, 150);
+    pros::screen::set_pen(pros::Color::white);
+    pros::screen::print(TEXT_MEDIUM, 60, 105, "Skills");
+    pros::screen::set_pen(pros::Color::blue);
+    pros::screen::fill_rect(260, 50, 460, 150);
+    pros::screen::set_pen(pros::Color::white);
+    pros::screen::print(TEXT_MEDIUM, 310, 105, "Auton2");
 }
 
+void execAuto(){
+    pros::screen_touch_status_s_t status = pros::screen::touch_status();
+    if (status.x > 10 && status.x < 210 && status.y > 50 && status.y < 150) {
+		auton_select = 1;
+        pros::screen::set_pen(pros::Color::white);
+        pros::screen::print(TEXT_MEDIUM, 10, 200, "READY: Skills ");
+    } 
+    // Check Auton2 Button
+    else if (status.x > 260 && status.x < 460 && status.y > 50 && status.y < 150) {
+		auton_select = 2;
+        pros::screen::set_pen(pros::Color::white);
+        pros::screen::print(TEXT_MEDIUM, 10, 200, "READY: Auton2 ");
+		
+    }
+}
 void autonSelect(){
-	drawButtons();
-	while(true){
-		if(Brain.Screen.pressing()){
-			int touchX = Brain.Screen.xPosition();
-			int touchY = Brain.Screen.yPosition();
-			if (touchX > 10 && touchX < 210 && touchY > 50 && touchY < 150) {
-                Brain.Screen.printAt(10, 200, "SELECTED: Skills");
-				skills();
-            } 
-            // Check Right Button
-            else if (touchX > 260 && touchX < 460 && touchY > 50 && touchY < 150) {
-                Brain.Screen.printAt(10, 200, "SELECTED: Auton2");
-
-            }
-		}
-		pros::delay(20)
-	}
+    drawButtons();
+    pros::screen::touch_callback(execAuto, TOUCH_PRESSED);
 }
 
 /**
@@ -81,15 +69,13 @@ void autonSelect(){
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-	pros::lcd::initialize();
-	pros::lcd::set_text(1, "Hello PROS User!");
-	
-	pros::lcd::register_btn1_cb(on_center_button);
+	//pros::lcd::initialize();
+	//pros::lcd::set_text(1, "Hello PROS User!");
 
 	pros::Task intake_task(intakeTask);
 
 	chassis.calibrate();
-	chassis.setPose(0, 0, 0);
+	//chassis.setPose(0, 0, 0);
 
 	autonSelect();
 }
@@ -131,7 +117,9 @@ void autonomous() {
     // move 48" forwards
     //chassis.moveToPoint(0, 48, 10000);
 
-    skills();
+    if(auton_select == 1){
+		skills();
+	}
 }
 
 /**
@@ -155,7 +143,8 @@ void opcontrol() {
 
 	descore.set_value(descore_state);
 
-	match_loader.set_value(loader_state);
+	match_loader_1.set_value(loader_state);
+	match_loader_2.set_value(loader_state);
 
 	while (true) {
 		
@@ -163,8 +152,8 @@ void opcontrol() {
 		master.print(0,0,"%f",chassis.getPose().y);
 
 		// Arcade control scheme
-		int dir = master.get_analog(ANALOG_LEFT_Y)*-1;    // Gets amount forward/backward from left joystick
-		int turn = master.get_analog(ANALOG_LEFT_X);  // Gets the turn left/right from right joystick
+		int dir = master.get_analog(ANALOG_LEFT_Y);    // Gets amount forward/backward from left joystick
+		int turn = master.get_analog(ANALOG_RIGHT_X);  // Gets the turn left/right from right joystick
 		left_motors.move(dir + turn);                      // Sets left motor voltage
 		right_motors.move(dir - turn);                     // Sets right motor voltage
 
@@ -187,7 +176,8 @@ void opcontrol() {
 		//match loader control
 		if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B)){
 			loader_state = !loader_state;
-			match_loader.set_value(loader_state);
+			match_loader_1.set_value(loader_state);
+			match_loader_2.set_value(loader_state);
 		}
 
 		//descore control
