@@ -9,6 +9,27 @@
 
 using pros::delay;
 
+inline void shove(int loop){
+    //left_motors.move(-1);
+	//right_motors.move(-1);
+    //delay(500);
+    left_motors.move(60);
+	right_motors.move(60);
+    delay(500);
+    left_motors.move(0);
+	right_motors.move(0);
+    delay(1000);
+    for(int i = 0; i < loop; i++){
+        left_motors.move(50);
+	    right_motors.move(50);
+        delay(300);
+        left_motors.move(0);
+	    right_motors.move(0);
+        delay(200);
+    }
+}
+
+
 // skills route
 ASSET(skills_txt);
 inline lemlib_tarball::Decoder decoder_skills(skills_txt);
@@ -16,15 +37,17 @@ inline void skills(){
     chassis.setPose(-43.905, 0.196, 0);
     //--Closer side-- 
     chassis.follow(decoder_skills["Path0"], 15, 5000);
+    chassis.turnToHeading(270, 5000);
+    chassis.waitUntilDone();
+    
+    forwardIntake();
     match_loader_1.set_value(true); // match loader down
     match_loader_2.set_value(true); // match loader down
-    chassis.waitUntilDone();
-    chassis.turnToHeading(270, 5000);
-    forwardIntake();
     //grab blocks
     chassis.follow(decoder_skills["Path1"], 15, 5000);
     chassis.waitUntilDone();
-    delay(2000);
+    shove(10);
+    delay(800);
     chassis.follow(decoder_skills["Path2"], 15, 5000, false);
     chassis.waitUntilDone();
     match_loader_1.set_value(false); // match loader up
@@ -32,19 +55,21 @@ inline void skills(){
     stopIntake();
     chassis.turnToHeading(0, 5000);
     chassis.follow(decoder_skills["Path3"], 15, 10000);
+    chassis.moveToPoint(45.348, 52, 5000);
     chassis.waitUntilDone();
     //--further side--
     chassis.turnToHeading(90, 5000);
     chassis.follow(decoder_skills["Path4"], 15, 5000, false);
     chassis.waitUntilDone();
     forwardIntakeHoodAuton();
-    delay(3000);
-    chassis.follow(decoder_skills["Path5"], 15, 5000);
-    forwardIntake();
+    delay(4000);
     match_loader_1.set_value(true); // match loader down
     match_loader_2.set_value(true); // match loader down
+    chassis.follow(decoder_skills["Path5"], 15, 5000);
     chassis.waitUntilDone();
-    delay(3000);
+    forwardIntake();
+    shove(10);
+    delay(1000);
     chassis.follow(decoder_skills["Path6"], 15, 5000, false);
     chassis.waitUntilDone();
     forwardIntakeHoodAuton();
@@ -55,15 +80,16 @@ inline void skills(){
     chassis.follow(decoder_skills["Path7"], 15, 5000);
     chassis.turnToHeading(180, 5000);
     chassis.follow(decoder_skills["Path8"], 15, 10000);
+    chassis.turnToHeading(90, 5000);
     chassis.waitUntilDone();
     //--still further side but opposite
     match_loader_1.set_value(true); // match loader down
     match_loader_2.set_value(true); // match loader down
-    chassis.turnToHeading(90, 5000);
     forwardIntakeHoodAuton();
     chassis.follow(decoder_skills["Path9"], 15, 5000);
     chassis.waitUntilDone();
-    delay(3000);
+    shove(10);
+    delay(1000);
     chassis.follow(decoder_skills["Path10"], 15, 5000,false);
     chassis.waitUntilDone();
     stopIntake();
