@@ -31,32 +31,81 @@ string colour_sensor(){
 int auton_select = 0;
 
 void drawButtons(){
-    pros::screen::erase();
-    pros::screen::set_pen(pros::Color::red);
-    pros::screen::fill_rect(10, 50, 210, 150);
-    pros::screen::set_pen(pros::Color::white);
-    pros::screen::print(TEXT_MEDIUM, 60, 105, "Skills");
-    pros::screen::set_pen(pros::Color::blue);
-    pros::screen::fill_rect(260, 50, 460, 150);
-    pros::screen::set_pen(pros::Color::white);
-    pros::screen::print(TEXT_MEDIUM, 310, 105, "Auton2");
+	pros::screen::erase();
+	//Skills
+	pros::screen::set_pen(pros::c::COLOR_RED);
+	pros::screen::fill_rect(10, 50, 110, 100);
+	pros::screen::set_pen(pros::c::COLOR_WHITE);
+    pros::screen::print(TEXT_MEDIUM, 50, 75, "Skills");
+	//button 2
+	pros::screen::set_pen(pros::c::COLOR_BLUE);
+	pros::screen::fill_rect(140, 50, 240, 100);
+	pros::screen::set_pen(pros::c::COLOR_WHITE);
+    pros::screen::print(TEXT_MEDIUM, 190, 75, "Auton2");
+	//button 3
+	pros::screen::set_pen(pros::c::COLOR_RED);
+	pros::screen::fill_rect(260, 50, 360, 100);
+	pros::screen::set_pen(pros::c::COLOR_WHITE);
+    pros::screen::print(TEXT_MEDIUM, 300, 75, "Auton3");
+	//button 4
+	pros::screen::set_pen(pros::c::COLOR_BLUE);
+	pros::screen::fill_rect(10, 110, 110, 210);
+	pros::screen::set_pen(pros::c::COLOR_WHITE);
+    pros::screen::print(TEXT_MEDIUM, 50, 160, "Auton4");
+	//button5
+	pros::screen::set_pen(pros::c::COLOR_RED);
+	pros::screen::fill_rect(140, 110, 240, 210);
+	pros::screen::set_pen(pros::c::COLOR_WHITE);
+    pros::screen::print(TEXT_MEDIUM, 190, 160, "Auton5");
+	//button 6
+	pros::screen::set_pen(pros::c::COLOR_BLUE);
+	pros::screen::fill_rect(260, 110, 360, 210);
+	pros::screen::set_pen(pros::c::COLOR_WHITE);
+    pros::screen::print(TEXT_MEDIUM, 300, 160, "Auton6");
 }
 
 void execAuto(){
-    pros::screen_touch_status_s_t status = pros::screen::touch_status();
-    if (status.x > 10 && status.x < 210 && status.y > 50 && status.y < 150) {
+	pros::screen_touch_status_s_t status = pros::screen::touch_status();
+	//Skills button
+	if (status.x > 10 && status.x < 110 && status.y > 50 && status.y < 100) {
 		auton_select = 1;
-        pros::screen::set_pen(pros::Color::white);
+        pros::screen::set_pen(pros::c::COLOR_WHITE);
         pros::screen::print(TEXT_MEDIUM, 10, 200, "READY: Skills ");
-    } 
-    // Check Auton2 Button
-    else if (status.x > 260 && status.x < 460 && status.y > 50 && status.y < 150) {
-		auton_select = 2;
-        pros::screen::set_pen(pros::Color::white);
-        pros::screen::print(TEXT_MEDIUM, 10, 200, "READY: Auton2 ");
 		
+    } 
+	//button 2
+    else if (status.x > 140 && status.x < 240 && status.y > 50 && status.y < 100) {
+		auton_select = 2;
+        pros::screen::set_pen(pros::c::COLOR_WHITE);
+        pros::screen::print(TEXT_MEDIUM, 10, 200, "READY: Auton2 ");
+    }
+	//button 3
+	else if (status.x > 260 && status.x < 360 && status.y > 50 && status.y < 100) {
+		auton_select = 3;
+        pros::screen::set_pen(pros::c::COLOR_WHITE);
+        pros::screen::print(TEXT_MEDIUM, 10, 200, "READY: Auton3 ");
+    }
+	//button 4
+	else if (status.x > 10 && status.x < 110 && status.y > 110 && status.y < 210) {
+		auton_select = 4;
+        pros::screen::set_pen(pros::c::COLOR_WHITE);
+        pros::screen::print(TEXT_MEDIUM, 10, 200, "READY: Auton4 ");
+		
+    } 
+	//button 5
+    else if (status.x > 140 && status.x < 240 && status.y > 110 && status.y < 210) {
+		auton_select = 5;
+        pros::screen::set_pen(pros::c::COLOR_WHITE);
+        pros::screen::print(TEXT_MEDIUM, 10, 200, "READY: Auton5 ");
+    }
+	//button 6
+	else if (status.x > 260 && status.x < 360 && status.y > 110 && status.y < 210) {
+		auton_select = 6;
+        pros::screen::set_pen(pros::c::COLOR_WHITE);
+        pros::screen::print(TEXT_MEDIUM, 10, 200, "READY: Auton6 ");
     }
 }
+
 void autonSelect(){
     drawButtons();
     pros::screen::touch_callback(execAuto, TOUCH_PRESSED);
@@ -117,9 +166,11 @@ void autonomous() {
     // move 48" forwards
     //chassis.moveToPoint(0, 48, 10000);
 
+	skills();
+	/*
     if(auton_select == 1){
 		skills();
-	}
+	}*/
 }
 
 /**
@@ -149,7 +200,7 @@ void opcontrol() {
 	while (true) {
 		
 		pros::lcd::set_text(1, "Hello PROS User!");
-		master.print(0,0,"%f",chassis.getPose().y);
+		master.print(0,0,"%f",chassis.getPose().x);
 
 		// Arcade control scheme
 		int dir = master.get_analog(ANALOG_LEFT_Y);    // Gets amount forward/backward from left joystick
