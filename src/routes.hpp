@@ -97,6 +97,7 @@ inline void skills(){
     match_loader_2.set_value(false); // match loader up
     chassis.turnToHeading(180, 5000);
     chassis.follow(decoder_skills["Path11"], 15, 10000);
+    chassis.moveToPoint(-35,-48, 5000);
     //--back to closest side--
     chassis.turnToHeading(270, 5000);
     chassis.follow(decoder_skills["Path12"], 15, 5000,false);
