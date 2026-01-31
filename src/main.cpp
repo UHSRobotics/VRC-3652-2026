@@ -41,12 +41,12 @@ void drawButtons(){
 	pros::screen::set_pen(pros::c::COLOR_BLUE);
 	pros::screen::fill_rect(140, 50, 240, 100);
 	pros::screen::set_pen(pros::c::COLOR_WHITE);
-    pros::screen::print(TEXT_MEDIUM, 190, 75, "Auton2");
+    pros::screen::print(TEXT_MEDIUM, 190, 75, "Autonl");
 	//button 3
 	pros::screen::set_pen(pros::c::COLOR_RED);
 	pros::screen::fill_rect(260, 50, 360, 100);
 	pros::screen::set_pen(pros::c::COLOR_WHITE);
-    pros::screen::print(TEXT_MEDIUM, 300, 75, "Auton3");
+    pros::screen::print(TEXT_MEDIUM, 300, 75, "Autonr");
 	//button 4
 	pros::screen::set_pen(pros::c::COLOR_BLUE);
 	pros::screen::fill_rect(10, 110, 110, 210);
@@ -77,13 +77,13 @@ void execAuto(){
     else if (status.x > 140 && status.x < 240 && status.y > 50 && status.y < 100) {
 		auton_select = 2;
         pros::screen::set_pen(pros::c::COLOR_WHITE);
-        pros::screen::print(TEXT_MEDIUM, 10, 200, "READY: Auton2 ");
+        pros::screen::print(TEXT_MEDIUM, 10, 200, "READY: Autonl ");
     }
 	//button 3
 	else if (status.x > 260 && status.x < 360 && status.y > 50 && status.y < 100) {
 		auton_select = 3;
         pros::screen::set_pen(pros::c::COLOR_WHITE);
-        pros::screen::print(TEXT_MEDIUM, 10, 200, "READY: Auton3 ");
+        pros::screen::print(TEXT_MEDIUM, 10, 200, "READY: Autonr ");
     }
 	//button 4
 	else if (status.x > 10 && status.x < 110 && status.y > 110 && status.y < 210) {
@@ -165,12 +165,16 @@ void autonomous() {
     //chassis.turnToHeading(90, 100000);
     // move 48" forwards
     //chassis.moveToPoint(0, 48, 10000);
-
-	skills();
-	/*
-    if(auton_select == 1){
-		skills();
-	}*/
+    // if(auton_select == 1){
+	// 	skills();
+	// }
+	// else if (auton_select == 2){
+	// 	auton_l();
+	// }
+	// else if (auton_select == 3){
+	// 	auton_r();
+	// }
+	auton_l();
 }
 
 /**

@@ -162,22 +162,25 @@ ASSET(autonl_txt);
 inline lemlib_tarball::Decoder decoder_autonl(autonl_txt);
 
 inline void auton_l(){
-    chassis.setPose(-41.235, 7.215, 45); //Set Robot Ini-State;
+    chassis.setPose(-45.261, 12.247, 65); //Set Robot Ini-State;
     chassis.follow(decoder_autonl["Path0"], 15, 5000);
     delay(10); 
     forwardIntake();              
     chassis.waitUntilDone();
-    delay(200);
+    delay(800);
     chassis.turnToHeading(315, 5000);
     chassis.follow(decoder_autonl["Path1"], 15, 5000);
-    delay(30);
-    match_loader_1.set_value(true);        // Match_Loader Up
+    delay(44);
+    match_loader_1.set_value(true);        // Match_Loader Down
     match_loader_2.set_value(true);  
     forwardIntake();
     chassis.waitUntilDone();
-    delay(2000);
-    match_loader_1.set_value(false);        // Match_Loader Down
-    match_loader_2.set_value(false);  
     chassis.follow(decoder_autonl["Path2"], 15, 5000, false);
+    delay(600);
+    forwardIntakeHoodAuton();         // Outake L-Long Goal
+    delay(5000);
+    stopIntake();
+    chassis.follow(decoder_autonl["Path3"], 15, 5000);
+    shove(4);
     forwardIntakeHoodAuton();         // Outake L-Long Goal
 }
