@@ -135,16 +135,17 @@ inline void auton_r(){
     forwardIntake();              
     chassis.waitUntilDone();
     delay(200);
-    chassis.turnToHeading(45, 5000);
+    /*chassis.turnToHeading(45, 5000);
     chassis.follow(decoder_autonr["Path1"], 15, 5000);
     chassis.waitUntilDone();
     reverseIntake();                        // Outake Middle Low_Goal;
     delay(3000);
     chassis.follow(decoder_autonr["Path2"], 15, 5000, false);
-    chassis.waitUntilDone();
+    chassis.waitUntilDone();*/
     chassis.turnToHeading(225, 5000);
     chassis.follow(decoder_autonr["Path3"], 15, 5000);
-    delay(40);
+    chassis.waitUntilDone();
+    delay(40); 
     match_loader_1.set_value(true);         // Match_Loader Down
     match_loader_2.set_value(true);         // Match_Loader Down
     forwardIntake();                        // Start Intake
@@ -157,12 +158,42 @@ inline void auton_r(){
     forwardIntakeHoodAuton();                        // Outake R-Long Goal
 }
 
+/*
 // auton_l route
 ASSET(autonl_txt);
 inline lemlib_tarball::Decoder decoder_autonl(autonl_txt);
 
 inline void auton_l(){
     chassis.setPose(-45.261, 12.247, 65); //Set Robot Ini-State;
+    chassis.follow(decoder_autonl["Path0"], 15, 5000);
+    delay(10); 
+    forwardIntake();              
+    chassis.waitUntilDone();
+    delay(800);
+    chassis.turnToHeading(315, 5000);
+    chassis.follow(decoder_autonl["Path1"], 15, 5000);
+    delay(44);
+    match_loader_1.set_value(true);        // Match_Loader Down
+    match_loader_2.set_value(true);  
+    forwardIntake();
+    chassis.waitUntilDone();
+    chassis.follow(decoder_autonl["Path2"], 15, 5000, false);
+    delay(600);
+    forwardIntakeHoodAuton();         // Outake L-Long Goal
+    delay(5000);
+    stopIntake();
+    chassis.follow(decoder_autonl["Path3"], 15, 5000);
+    shove(4);
+    forwardIntakeHoodAuton();         // Outake L-Long Goal
+}
+    */
+
+// auton_l route
+ASSET(autonr2_txt);
+inline lemlib_tarball::Decoder decoder_autonl(autonr2_txt);
+
+inline void auton_r2(){
+    chassis.setPose(-45.261, -12.247, 115); //Set Robot Ini-State;
     chassis.follow(decoder_autonl["Path0"], 15, 5000);
     delay(10); 
     forwardIntake();              

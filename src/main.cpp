@@ -160,6 +160,7 @@ void competition_initialize() {}
  */
 
 void autonomous() {
+	descore.set_value(true);
     //chassis.setPose(0, 0, 0);
     // turn to face heading 90 with a very long timeout
     //chassis.turnToHeading(90, 100000);
@@ -174,7 +175,10 @@ void autonomous() {
 	// else if (auton_select == 3){
 	// 	auton_r();
 	// }
-	auton_l();
+	//auton_l();
+	// skills();
+	//auton_l();
+	auton_r2();
 }
 
 /**
@@ -200,6 +204,12 @@ void opcontrol() {
 
 	match_loader_1.set_value(loader_state);
 	match_loader_2.set_value(loader_state);
+
+	//left_motors.set_brake_mode_all(MOTOR_BRAKE_COAST);
+	//right_motors.set_brake_mode_all(MOTOR_BRAKE_COAST);
+
+	left_motors.set_brake_mode_all(MOTOR_BRAKE_HOLD);
+	right_motors.set_brake_mode_all(MOTOR_BRAKE_HOLD);
 
 	while (true) {
 		
