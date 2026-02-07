@@ -224,16 +224,14 @@ void opcontrol() {
 
 		//intake control
 		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
-			forwardIntakeHood();
+			forwardIntake();
 		}
-		else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
+		else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
 			reverseIntakeHood();
 		}
 		else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
-			forwardIntake();
-		} else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
-			reverseIntake();
-		}
+			forwardIntakeHood();
+		} 
 		else{
 			stopIntake();
 		}
@@ -246,7 +244,7 @@ void opcontrol() {
 		}
 
 		//descore control
-		if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A)){
+		if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_R2)){
 			descore_state = !descore_state;
 			descore.set_value(descore_state);
 		}
