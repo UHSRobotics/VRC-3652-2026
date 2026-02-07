@@ -10,18 +10,22 @@
 using pros::delay;
 
 inline void shove(int loop){
-    //left_motors.move(-1);
-	//right_motors.move(-1);
-    //delay(500);
-    left_motors.move(60);
-	right_motors.move(60);
+    /*left_motors.move_velocity(45);
+	right_motors.move_velocity(45);
+    delay(loop);
+    left_motors.move_velocity(0);
+	right_motors.move_velocity(0);
+    delay(500);*/
+    
+    left_motors.move(45);
+	right_motors.move(45);
     delay(500);
     left_motors.move(0);
 	right_motors.move(0);
     delay(1000);
     for(int i = 0; i < loop; i++){
-        left_motors.move(60);
-	    right_motors.move(60);
+        left_motors.move(45);
+	    right_motors.move(45);
         delay(300);
         left_motors.move(0);
 	    right_motors.move(0);
@@ -35,68 +39,85 @@ ASSET(skills_txt);
 inline lemlib_tarball::Decoder decoder_skills(skills_txt);
 inline void skills(){
     chassis.setPose(-43.905, 0.196, 0);
+
+    descore.set_value(true);
     //--Closer side-- 
-    chassis.follow(decoder_skills["Path0"], 15, 5000);
+    chassis.moveToPoint(-43.6, 45.128, 5000);
+    //chassis.follow(decoder_skills["Path0"], 15, 5000);
     chassis.turnToHeading(270, 5000);
     chassis.waitUntilDone();
     
-    forwardIntake();
+    forwardIntakeAuton();
     match_loader_1.set_value(true); // match loader down
     match_loader_2.set_value(true); // match loader down
     //grab blocks
-    chassis.follow(decoder_skills["Path1"], 15, 5000);
+    chassis.follow(decoder_skills["Path1"], 15, 1000);
     chassis.waitUntilDone();
-    shove(8);
-    delay(800);
+    shove(3);
+    //delay(2000);
     chassis.follow(decoder_skills["Path2"], 15, 5000, false);
     chassis.waitUntilDone();
     match_loader_1.set_value(false); // match loader up
     match_loader_2.set_value(false); // match loader up
     stopIntake();
-    chassis.turnToHeading(0, 5000);
-    chassis.follow(decoder_skills["Path3"], 15, 10000);
-    chassis.moveToPoint(45.348, 52, 5000);
+    chassis.turnToHeading(180, 5000);
+    // NOTE TO SELF REPLACE THESE WITH MOVE TO POINTS AND TURN TO HEADINGS
+    //chassis.follow(decoder_skills["Path3"], 15, 10000);
+    chassis.moveToPoint(-38.8, 31, 5000);
+    chassis.turnToPoint(39.846, 30, 5000);
+    chassis.moveToPoint(39.846, 30, 5000);
+    chassis.moveToPoint(45.348, 40, 5000);
     chassis.waitUntilDone();
     //--further side--
     chassis.turnToHeading(90, 5000);
-    chassis.follow(decoder_skills["Path4"], 15, 5000, false);
+    //chassis.follow(decoder_skills["Path4"], 15, 5000, false);
+    chassis.moveToPoint(31,40,2000,{.forwards=false});
     chassis.waitUntilDone();
     forwardIntakeHoodAuton();
     delay(4000);
-    forwardIntake();
+    forwardIntakeAuton();
     match_loader_1.set_value(true); // match loader down
     match_loader_2.set_value(true); // match loader down
-    chassis.follow(decoder_skills["Path5"], 15, 5000);
+    //chassis.follow(decoder_skills["Path5"], 15, 5000);
+    chassis.moveToPoint(58.4,39,2000);
     chassis.waitUntilDone();
-    shove(8);
-    delay(800);
-    chassis.follow(decoder_skills["Path6"], 15, 5000, false);
+    shove(3);
+    //delay(500);
+    //chassis.follow(decoder_skills["Path6"], 15, 5000, false);
+    chassis.moveToPoint(31,40,2000,{.forwards=false});
     chassis.waitUntilDone();
     forwardIntakeHoodAuton();
     match_loader_1.set_value(false); // match loader up
     match_loader_2.set_value(false); // match loader up
     delay(3500);
     stopIntake();
-    chassis.follow(decoder_skills["Path7"], 15, 5000);
+    //chassis.follow(decoder_skills["Path7"], 15, 5000);
+    chassis.moveToPoint(39, 41, 5000);
     chassis.turnToHeading(180, 5000);
-    chassis.follow(decoder_skills["Path8"], 15, 10000);
+    //chassis.follow(decoder_skills["Path8"], 15, 10000);
+    chassis.moveToPoint(39, -54, 5000);
     chassis.turnToHeading(90, 5000);
     chassis.waitUntilDone();
     //--still further side but opposite
     match_loader_1.set_value(true); // match loader down
     match_loader_2.set_value(true); // match loader down
-    forwardIntake();
-    chassis.follow(decoder_skills["Path9"], 15, 5000);
+    forwardIntakeAuton();
+    //chassis.follow(decoder_skills["Path9"], 15, 5000);
+    chassis.moveToPoint(54.6, -54, 5000);
     chassis.waitUntilDone();
-    shove(12);
-    delay(1000);
-    chassis.follow(decoder_skills["Path10"], 15, 5000,false);
+    shove(3);
+    //delay(500);
+    //chassis.follow(decoder_skills["Path10"], 15, 5000,false);
+    chassis.moveToPoint(39, -54, 5000, {.forwards=false});
     chassis.waitUntilDone();
     stopIntake();
     match_loader_1.set_value(false); // match loader up
     match_loader_2.set_value(false); // match loader up
-    chassis.turnToHeading(180, 5000);
-    chassis.follow(decoder_skills["Path11"], 15, 10000);
+    chassis.turnToHeading(0, 5000);
+    //chassis.follow(decoder_skills["Path11"], 15, 10000);
+    chassis.moveToPoint(38.8, -31, 5000);
+    chassis.turnToPoint(39.846, -30, 5000);
+    chassis.moveToPoint(39.846, -30, 5000);
     chassis.moveToPoint(-35,-48, 5000);
     //--back to closest side--
     chassis.turnToHeading(270, 5000);
@@ -106,11 +127,11 @@ inline void skills(){
     delay(5000);
     match_loader_1.set_value(true); // match loader down
     match_loader_2.set_value(true); // match loader down
-    forwardIntake();
+    forwardIntakeAuton();
     chassis.follow(decoder_skills["Path13"], 15, 5000);
     chassis.waitUntilDone();
-    shove(12);
-    delay(1000);
+    shove(10);
+    //delay(2000);
     chassis.follow(decoder_skills["Path14"], 15, 5000, false);
     chassis.waitUntilDone();
     match_loader_1.set_value(false); // match loader up
@@ -119,9 +140,9 @@ inline void skills(){
     delay(3000);
     stopIntake();
     // --park--
-    chassis.follow(decoder_skills["Path15"], 15, 5000);
-    chassis.follow(decoder_skills["Path16"], 15, 5000);
-    chassis.follow(decoder_skills["Path17"], 15, 5000);
+    //chassis.follow(decoder_skills["Path15"], 15, 5000);
+    //chassis.follow(decoder_skills["Path16"], 15, 5000);
+    //chassis.follow(decoder_skills["Path17"], 15, 5000);
 }
 
 // auton_r route

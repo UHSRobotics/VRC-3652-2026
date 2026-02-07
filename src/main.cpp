@@ -160,7 +160,6 @@ void competition_initialize() {}
  */
 
 void autonomous() {
-	descore.set_value(true);
     //chassis.setPose(0, 0, 0);
     // turn to face heading 90 with a very long timeout
     //chassis.turnToHeading(90, 100000);
@@ -176,9 +175,9 @@ void autonomous() {
 	// 	auton_r();
 	// }
 	//auton_l();
-	// skills();
+	skills();
 	//auton_l();
-	auton_r2();
+	//auton_r2();
 }
 
 /**

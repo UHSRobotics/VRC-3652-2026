@@ -24,8 +24,23 @@ inline void preventStuck() {
     if(intake.get_actual_velocity() < 1)
     {
         intake.move(-127);
-        pros::delay(350);
+        pros::delay(70);
         intake.move(127);
+        pros::delay(300);
+    } 
+}
+
+// prevent the intake from fully jamming
+inline void preventStuckHood() {
+    // move forward
+    hood.move(127);
+    pros::delay(100);
+    // detect if it isn't moving, if so move back and forth
+    if(intake.get_actual_velocity() < 1)
+    {
+        hood.move(-127);
+        pros::delay(70);
+        hood.move(127);
         pros::delay(300);
     } 
 }
@@ -57,7 +72,13 @@ inline void intakeTask(void *param) {
                 break;
             case 3:
                 preventStuck();
-                hood.move(127);
+                preventStuckHood();
+                //hood.move(127);
+                break;
+            case 4:
+                preventStuck();
+                hood.move(0);
+                break;
         }
         pros::delay(10);
     }
@@ -81,6 +102,11 @@ inline void reverseIntakeHood(){
 // move only intake forward
 inline void forwardIntake(){
     intakeState.store(2);
+}
+
+// move only intake forward
+inline void forwardIntakeAuton(){
+    intakeState.store(4);
 }
 
 // move only intake backward
