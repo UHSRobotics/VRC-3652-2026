@@ -160,23 +160,15 @@ void competition_initialize() {}
  */
 
 void autonomous() {
-    //chassis.setPose(0, 0, 0);
-    // turn to face heading 90 with a very long timeout
-    //chassis.turnToHeading(90, 100000);
-    // move 48" forwards
-    //chassis.moveToPoint(0, 48, 10000);
-    // if(auton_select == 1){
-	// 	skills();
-	// }
-	// else if (auton_select == 2){
-	// 	auton_l();
-	// }
-	// else if (auton_select == 3){
-	// 	auton_r();
-	// }
+     if(auton_select == 1){
+	 	skills();
+	 } else if (auton_select == 2){
+	 	auton_l();
+	 } else if (auton_select == 3){
+	 	auton_r2();
+	 }
 	//auton_l();
-	skills();
-	//auton_l();
+	//skills();
 	//auton_r2();
 }
 

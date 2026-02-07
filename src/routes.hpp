@@ -179,7 +179,7 @@ inline void auton_r(){
     forwardIntakeHoodAuton();                        // Outake R-Long Goal
 }
 
-/*
+
 // auton_l route
 ASSET(autonl_txt);
 inline lemlib_tarball::Decoder decoder_autonl(autonl_txt);
@@ -207,32 +207,41 @@ inline void auton_l(){
     shove(4);
     forwardIntakeHoodAuton();         // Outake L-Long Goal
 }
-    */
 
 // auton_l route
 ASSET(autonr2_txt);
-inline lemlib_tarball::Decoder decoder_autonl(autonr2_txt);
+inline lemlib_tarball::Decoder decoder_autonr2(autonr2_txt);
 
 inline void auton_r2(){
     chassis.setPose(-45.261, -12.247, 115); //Set Robot Ini-State;
-    chassis.follow(decoder_autonl["Path0"], 15, 5000);
+    //chassis.follow(decoder_autonr2["Path0"], 15, 5000);
+    chassis.moveToPoint(-24.325, -21.406, 2000);
     delay(10); 
-    forwardIntake();              
+    forwardIntake();
     chassis.waitUntilDone();
     delay(800);
-    chassis.turnToHeading(315, 5000);
-    chassis.follow(decoder_autonl["Path1"], 15, 5000);
+    chassis.turnToHeading(225, 5000);
+    //chassis.follow(decoder_autonr2["Path1"], 15, 5000);
+    chassis.moveToPoint(-38,-52,2000);
+    chassis.waitUntilDone();
+    chassis.turnToPoint(-59.352, -52,2000);
+    chassis.waitUntilDone();
     delay(44);
     match_loader_1.set_value(true);        // Match_Loader Down
     match_loader_2.set_value(true);  
     forwardIntake();
+    delay(500);
+    chassis.moveToPoint(-59.352, -52,2000);
     chassis.waitUntilDone();
-    chassis.follow(decoder_autonl["Path2"], 15, 5000, false);
-    delay(600);
+    //chassis.follow(decoder_autonr2["Path2"], 15, 5000, false);
+    delay(2000);
+    chassis.moveToPoint(-25.332, -52,2000,{.forwards=false});
+    chassis.waitUntilDone();
+    delay(100);
     forwardIntakeHoodAuton();         // Outake L-Long Goal
     delay(5000);
     stopIntake();
-    chassis.follow(decoder_autonl["Path3"], 15, 5000);
+    chassis.follow(decoder_autonr2["Path3"], 15, 5000);
     shove(4);
     forwardIntakeHoodAuton();         // Outake L-Long Goal
 }
