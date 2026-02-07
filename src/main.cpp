@@ -237,7 +237,7 @@ void opcontrol() {
 		}
 
 		//match loader control
-		if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B)){
+		if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A)){
 			loader_state = !loader_state;
 			match_loader_1.set_value(loader_state);
 			match_loader_2.set_value(loader_state);
