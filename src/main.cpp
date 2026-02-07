@@ -214,7 +214,8 @@ void opcontrol() {
 	while (true) {
 		
 		pros::lcd::set_text(1, "Hello PROS User!");
-		master.print(0,0,"%f",chassis.getPose().x);
+		lemlib::Pose p = chassis.getPose();
+		master.print(0, 0, "X%.1f Y%.1f Theta%.0f", p.x, p.y, p.theta);
 
 		// Arcade control scheme
 		int dir = master.get_analog(ANALOG_LEFT_Y);    // Gets amount forward/backward from left joystick
@@ -226,7 +227,7 @@ void opcontrol() {
 		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
 			forwardIntake();
 		}
-		else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
+		else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
 			reverseIntakeHood();
 		}
 		else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
@@ -244,7 +245,7 @@ void opcontrol() {
 		}
 
 		//descore control
-		if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_R2)){
+		if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L2)){
 			descore_state = !descore_state;
 			descore.set_value(descore_state);
 		}
