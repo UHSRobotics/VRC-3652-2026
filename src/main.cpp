@@ -51,7 +51,7 @@ void drawButtons(){
 	pros::screen::set_pen(pros::c::COLOR_BLUE);
 	pros::screen::fill_rect(10, 110, 110, 210);
 	pros::screen::set_pen(pros::c::COLOR_WHITE);
-    pros::screen::print(TEXT_MEDIUM, 50, 160, "Auton4");
+    pros::screen::print(TEXT_MEDIUM, 50, 160, "Forward");
 	//button5
 	pros::screen::set_pen(pros::c::COLOR_RED);
 	pros::screen::fill_rect(140, 110, 240, 210);
@@ -89,7 +89,7 @@ void execAuto(){
 	else if (status.x > 10 && status.x < 110 && status.y > 110 && status.y < 210) {
 		auton_select = 4;
         pros::screen::set_pen(pros::c::COLOR_WHITE);
-        pros::screen::print(TEXT_MEDIUM, 10, 200, "READY: Auton4 ");
+        pros::screen::print(TEXT_MEDIUM, 10, 200, "READY: Forward ");
 		
     } 
 	//button 5
@@ -166,6 +166,9 @@ void autonomous() {
 	 	auton_l();
 	 } else if (auton_select == 3){
 	 	auton_r2();
+	 } else if (auton_select == 4){
+		chassis.setPose(0,0,0);
+		chassis.moveToPoint(0, 4, 5000);
 	 }
 	//auton_l();
 	//skills();
@@ -204,7 +207,7 @@ void opcontrol() {
 
 	while (true) {
 		
-		pros::lcd::set_text(1, "Hello PROS User!");
+				pros::lcd::set_text(1, "Hello PROS User!");
 		lemlib::Pose p = chassis.getPose();
 		master.print(0, 0, "X%.1f Y%.1f Theta%.0f", p.x, p.y, p.theta);
 
@@ -215,15 +218,17 @@ void opcontrol() {
 		right_motors.move(dir - turn);                     // Sets right motor voltage
 
 		//intake control
-		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
-			forwardIntake();
+		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
+			forwardIntakeHood();
 		}
 		else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
 			reverseIntakeHood();
 		}
-		else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
-			forwardIntakeHood();
-		} 
+		else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
+			forwardIntake();
+		} else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
+			reverseIntake();
+		}
 		else{
 			stopIntake();
 		}
@@ -236,7 +241,7 @@ void opcontrol() {
 		}
 
 		//descore control
-		if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L2)){
+		if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B)){
 			descore_state = !descore_state;
 			descore.set_value(descore_state);
 		}
