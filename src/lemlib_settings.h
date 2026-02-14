@@ -8,23 +8,26 @@
 
 inline pros::Controller master(pros::E_CONTROLLER_MASTER);
 
-inline pros::MotorGroup left_motors({13,-12, -11});      // left motors normal
-inline pros::MotorGroup right_motors({-16, 17, 18}); // reversed
+inline pros::MotorGroup left_motors({-7, 8, -9});      // left motors normal
+inline pros::MotorGroup right_motors({-1, 2, 3}); // reversed
 
-inline pros::Motor intake(-3);
-inline pros::Motor hood(1);
+inline pros::Motor intake(-12);
+inline pros::Motor hood(11);
 
-inline pros::IMU imu(4);
+inline pros::IMU imu(6);
 inline pros::Optical col_sen(3); //Random Colour sensor, port 3 is temp
 
-inline pros::Rotation horizontal_encoder(19);
-inline pros::Rotation vertical_encoder(-20);
+inline pros::Rotation vertical_encoder(-10);
 
-// trapdoor A
-inline pros::adi::DigitalOut match_loader_1('C', LOW);
-inline pros::adi::DigitalOut match_loader_2('A', LOW);
-inline pros::adi::DigitalOut descore('B', LOW);
-//inline pros::adi::DigitalOut trapdoor('A', LOW);
+// trapdoors (3 states)
+inline pros::adi::DigitalOut trapdoor_b('H', LOW); // Trapdoor Block
+inline pros::adi::DigitalOut trapdoor_m('G', LOW); // Trapdoor Middle
+// Match Loader
+inline pros::adi::DigitalOut match_loader('C', LOW);
+// Descore
+inline pros::adi::DigitalOut descore('D', LOW);
+// Low Goal Piston
+inline pros::adi::DigitalOut low_goal('E', LOW);
 
 
 inline lemlib::Drivetrain drivetrain(&left_motors, // left motor group
@@ -35,7 +38,6 @@ inline lemlib::Drivetrain drivetrain(&left_motors, // left motor group
                               2 // horizontal drift is 2 
 );
 
-inline lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_encoder, lemlib::Omniwheel::NEW_275, -0.5);
 inline lemlib::TrackingWheel vertical_tracking_wheel(&vertical_encoder, lemlib::Omniwheel::NEW_275, -0.4);
 
 inline lemlib::ControllerSettings lateral_controller(
@@ -62,7 +64,7 @@ inline lemlib::ControllerSettings angular_controller(
     0 // maximum acceleration (slew)
 );
 
-inline lemlib::OdomSensors sensors(&vertical_tracking_wheel, nullptr, &horizontal_tracking_wheel, nullptr, &imu); //MIght add horizontal tracking wheel later.
+inline lemlib::OdomSensors sensors(&vertical_tracking_wheel, nullptr, nullptr, nullptr, &imu); //MIght add horizontal tracking wheel later.
 
 inline lemlib::Chassis chassis(
     drivetrain,

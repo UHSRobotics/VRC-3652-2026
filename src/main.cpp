@@ -191,13 +191,19 @@ void autonomous() {
 void opcontrol() {
 
 	bool descore_state = false;
-	
-	bool loader_state = false;
-
 	descore.set_value(descore_state);
 
-	match_loader_1.set_value(loader_state);
-	match_loader_2.set_value(loader_state);
+	bool loader_state = false;
+	match_loader.set_value(loader_state);
+
+	bool lgoal_state = false;
+	low_goal.set_value(lgoal_state);
+
+	bool trapdoorb_state = false;
+	trapdoor_b.set_value(trapdoorb_state);
+
+	bool trapdoorm_state = false;
+	trapdoor_m.set_value(trapdoorm_state);
 
 	//left_motors.set_brake_mode_all(MOTOR_BRAKE_COAST);
 	//right_motors.set_brake_mode_all(MOTOR_BRAKE_COAST);
@@ -206,8 +212,7 @@ void opcontrol() {
 	right_motors.set_brake_mode_all(MOTOR_BRAKE_HOLD);
 
 	while (true) {
-		
-				pros::lcd::set_text(1, "Hello PROS User!");
+		pros::lcd::set_text(1, "Hello PROS User!");
 		lemlib::Pose p = chassis.getPose();
 		master.print(0, 0, "X%.1f Y%.1f Theta%.0f", p.x, p.y, p.theta);
 
@@ -218,32 +223,51 @@ void opcontrol() {
 		right_motors.move(dir - turn);                     // Sets right motor voltage
 
 		//intake control
-		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
+		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
 			forwardIntakeHood();
+			trapdoorb_state = true;
+			trapdoorm_state = false;
+			trapdoor_b.set_value(trapdoorb_state);
+			trapdoor_m.set_value(trapdoorm_state);
 		}
 		else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
 			reverseIntakeHood();
-		}
-		else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
-			forwardIntake();
-		} else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
-			reverseIntake();
+			trapdoorb_state = true;
+			trapdoorm_state = false;
+			trapdoor_b.set_value(trapdoorb_state);
+			trapdoor_m.set_value(trapdoorm_state);
 		}
 		else{
 			stopIntake();
 		}
 
+		// Middle Goal Score
+		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
+			trapdoorb_state = true;
+			trapdoorm_state = true;
+			trapdoor_b.set_value(trapdoorb_state);
+			trapdoor_m.set_value(trapdoorb_state);
+			forwardIntakeHood();
+		}
+		// Descore Control
+		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
+			descore_state = !descore_state;
+			descore.set_value(descore_state);
+		}
+
 		//match loader control
 		if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A)){
 			loader_state = !loader_state;
-			match_loader_1.set_value(loader_state);
-			match_loader_2.set_value(loader_state);
+			match_loader.set_value(loader_state);
 		}
 
-		//descore control
-		if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B)){
-			descore_state = !descore_state;
-			descore.set_value(descore_state);
+		//Long Goal Score
+		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_X)){
+			trapdoorb_state = false;
+			trapdoorm_state = false;
+			trapdoor_b.set_value(trapdoorb_state);
+			trapdoor_m.set_value(trapdoorb_state);
+			forwardIntakeHood();
 		}
 		pros::delay(20); // Run for 20 ms then update
 	}

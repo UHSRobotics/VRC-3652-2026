@@ -48,8 +48,7 @@ inline void skills(){
     chassis.waitUntilDone();
     
     forwardIntakeAuton();
-    match_loader_1.set_value(true); // match loader down
-    match_loader_2.set_value(true); // match loader down
+    match_loader.set_value(true); // match loader down
     //grab blocks
     chassis.follow(decoder_skills["Path1"], 15, 1000);
     chassis.waitUntilDone();
@@ -57,8 +56,7 @@ inline void skills(){
     //delay(2000);
     chassis.follow(decoder_skills["Path2"], 15, 5000, false);
     chassis.waitUntilDone();
-    match_loader_1.set_value(false); // match loader up
-    match_loader_2.set_value(false); // match loader up
+    match_loader.set_value(false); // match loader up
     stopIntake();
     chassis.turnToHeading(180, 5000);
     // NOTE TO SELF REPLACE THESE WITH MOVE TO POINTS AND TURN TO HEADINGS
@@ -76,8 +74,7 @@ inline void skills(){
     forwardIntakeHoodAuton();
     delay(4000);
     forwardIntakeAuton();
-    match_loader_1.set_value(true); // match loader down
-    match_loader_2.set_value(true); // match loader down
+    match_loader.set_value(true); // match loader down
     //chassis.follow(decoder_skills["Path5"], 15, 5000);
     chassis.moveToPoint(58.4,39,2000);
     chassis.waitUntilDone();
@@ -87,8 +84,7 @@ inline void skills(){
     chassis.moveToPoint(31,40,2000,{.forwards=false});
     chassis.waitUntilDone();
     forwardIntakeHoodAuton();
-    match_loader_1.set_value(false); // match loader up
-    match_loader_2.set_value(false); // match loader up
+    match_loader.set_value(false); // match loader up
     delay(3500);
     stopIntake();
     //chassis.follow(decoder_skills["Path7"], 15, 5000);
@@ -99,8 +95,7 @@ inline void skills(){
     chassis.turnToHeading(90, 5000);
     chassis.waitUntilDone();
     //--still further side but opposite
-    match_loader_1.set_value(true); // match loader down
-    match_loader_2.set_value(true); // match loader down
+    match_loader.set_value(true); // match loader down
     forwardIntakeAuton();
     //chassis.follow(decoder_skills["Path9"], 15, 5000);
     chassis.moveToPoint(54.6, -54, 5000);
@@ -111,8 +106,7 @@ inline void skills(){
     chassis.moveToPoint(39, -54, 5000, {.forwards=false});
     chassis.waitUntilDone();
     stopIntake();
-    match_loader_1.set_value(false); // match loader up
-    match_loader_2.set_value(false); // match loader up
+    match_loader.set_value(false); // match loader up
     chassis.turnToHeading(0, 5000);
     //chassis.follow(decoder_skills["Path11"], 15, 10000);
     chassis.moveToPoint(38.8, -31, 5000);
@@ -125,8 +119,7 @@ inline void skills(){
     chassis.waitUntilDone();
     forwardIntakeHoodAuton();
     delay(5000);
-    match_loader_1.set_value(true); // match loader down
-    match_loader_2.set_value(true); // match loader down
+    match_loader.set_value(true); // match loader down
     forwardIntakeAuton();
     chassis.follow(decoder_skills["Path13"], 15, 5000);
     chassis.waitUntilDone();
@@ -134,8 +127,7 @@ inline void skills(){
     //delay(2000);
     chassis.follow(decoder_skills["Path14"], 15, 5000, false);
     chassis.waitUntilDone();
-    match_loader_1.set_value(false); // match loader up
-    match_loader_2.set_value(false); // match loader up
+    match_loader.set_value(false); // match loader up
     forwardIntakeHoodAuton();
     delay(3000);
     stopIntake();
@@ -167,13 +159,11 @@ inline void auton_r(){
     chassis.follow(decoder_autonr["Path3"], 15, 5000);
     chassis.waitUntilDone();
     delay(40); 
-    match_loader_1.set_value(true);         // Match_Loader Down
-    match_loader_2.set_value(true);         // Match_Loader Down
+    match_loader.set_value(true);         // Match_Loader Down
     forwardIntake();                        // Start Intake
     chassis.waitUntilDone();
     delay(3000);
-    match_loader_1.set_value(false);        // Match_Loader Up
-    match_loader_2.set_value(false);        // Match_Loader Up
+    match_loader.set_value(false);        // Match_Loader Up
     chassis.follow(decoder_autonr["Path4"], 15, 5000, false);
     chassis.waitUntilDone();
     forwardIntakeHoodAuton();                        // Outake R-Long Goal
@@ -194,8 +184,7 @@ inline void auton_l(){
     chassis.turnToHeading(315, 5000);
     chassis.follow(decoder_autonl["Path1"], 15, 5000);
     delay(44);
-    match_loader_1.set_value(true);        // Match_Loader Down
-    match_loader_2.set_value(true);  
+    match_loader.set_value(true);        // Match_Loader Down
     forwardIntake();
     chassis.waitUntilDone();
     chassis.follow(decoder_autonl["Path2"], 15, 5000, false);
@@ -227,8 +216,7 @@ inline void auton_r2(){
     chassis.turnToPoint(-59.352, -52,2000);
     chassis.waitUntilDone();
     delay(44);
-    match_loader_1.set_value(true);        // Match_Loader Down
-    match_loader_2.set_value(true);  
+    match_loader.set_value(true);        // Match_Loader Down
     forwardIntake();
     delay(500);
     chassis.moveToPoint(-59.352, -52,2000);
