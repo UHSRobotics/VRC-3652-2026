@@ -38,7 +38,7 @@ inline lemlib::Drivetrain drivetrain(&left_motors, // left motor group
                               2 // horizontal drift is 2 
 );
 
-inline lemlib::TrackingWheel vertical_tracking_wheel(&vertical_encoder, lemlib::Omniwheel::NEW_275, -0.4);
+inline lemlib::TrackingWheel vertical_tracking_wheel(&vertical_encoder, lemlib::Omniwheel::NEW_275, -0.25);
 
 inline lemlib::ControllerSettings lateral_controller(
     6,   // kP — proportional gain
@@ -53,15 +53,15 @@ inline lemlib::ControllerSettings lateral_controller(
 );
 
 inline lemlib::ControllerSettings angular_controller(
-    4.15,    // kP — proportional gain
-    0,    // kI — integral gain
-    30,   // kD — derivative gain
+    0.92,    // kP — proportional gain
+    0.00,    // kI — integral gain
+    0.12,   // kD — derivative gain
     3, // anti windup
     1, // small error range, in inches
     100, // small error range timeout, in milliseconds
     3, // large error range, in inches
     500, // large error range timeout, in milliseconds
-    0 // maximum acceleration (slew)
+    30 // maximum acceleration (slew)
 );
 
 inline lemlib::OdomSensors sensors(&vertical_tracking_wheel, nullptr, nullptr, nullptr, &imu); //MIght add horizontal tracking wheel later.

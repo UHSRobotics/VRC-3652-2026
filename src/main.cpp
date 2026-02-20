@@ -176,6 +176,8 @@ void autonomous() {
 	//auton_l();
 	//skills();
 	//auton_r2();
+	chassis.setPose(0, 0, 0);
+	chassis.turnToHeading(90, 5000);
 
 }
 
@@ -218,7 +220,7 @@ void opcontrol() {
 	while (true) {
 		pros::lcd::set_text(1, "Hello PROS User!");
 		lemlib::Pose p = chassis.getPose();
-		master.print(0, 0, "X%.1f Y%.1f Theta%.0f", p.x, p.y, p.theta);
+		master.print(0, 0, "Theta%.10f", p.theta);
 
 		// Arcade control scheme
 		int dir = master.get_analog(ANALOG_LEFT_Y);    // Gets amount forward/backward from left joystick
