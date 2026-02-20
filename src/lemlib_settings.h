@@ -23,9 +23,9 @@ inline pros::Rotation vertical_encoder(-10);
 inline pros::adi::DigitalOut trapdoor_b('H', LOW); // Trapdoor Block
 inline pros::adi::DigitalOut trapdoor_m('G', LOW); // Trapdoor Middle
 // Match Loader
-inline pros::adi::DigitalOut match_loader('C', LOW);
+inline pros::adi::DigitalOut match_loader('B', LOW);
 // Descore
-inline pros::adi::DigitalOut descore('D', LOW);
+inline pros::adi::DigitalOut descore('A', LOW);
 // Low Goal Piston
 inline pros::adi::DigitalOut low_goal('E', LOW);
 

@@ -160,19 +160,23 @@ void competition_initialize() {}
  */
 
 void autonomous() {
-     if(auton_select == 1){
-	 	skills();
-	 } else if (auton_select == 2){
-	 	auton_l();
-	 } else if (auton_select == 3){
-	 	auton_r2();
-	 } else if (auton_select == 4){
-		chassis.setPose(0,0,0);
-		chassis.moveToPoint(0, 4, 5000);
-	 }
+	// if(auton_select == 1){
+	// 	skills();
+	// } 
+	// else if (auton_select == 2){
+	// 	auton_l();
+	// } 
+	// else if (auton_select == 3){
+	// 	auton_r2();
+	// } 
+	// else if (auton_select == 4){
+	// 	chassis.setPose(0,0,0);
+	// 	chassis.moveToPoint(0, 4, 5000);
+	// }
 	//auton_l();
 	//skills();
 	//auton_r2();
+
 }
 
 /**
@@ -250,7 +254,7 @@ void opcontrol() {
 			forwardIntakeHood();
 		}
 		// Descore Control
-		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
+		if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L2)) {
 			descore_state = !descore_state;
 			descore.set_value(descore_state);
 		}
