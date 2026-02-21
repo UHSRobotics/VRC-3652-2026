@@ -124,8 +124,7 @@ void initialize() {
 	pros::Task intake_task(intakeTask);
 
 	chassis.calibrate();
-	//chassis.setPose(0, 0, 0);
-
+	chassis.setPose(0, 0, 90);
 	autonSelect();
 }
 
@@ -173,12 +172,9 @@ void autonomous() {
 	// 	chassis.setPose(0,0,0);
 	// 	chassis.moveToPoint(0, 4, 5000);
 	// }
-	//auton_l();
+	auton_l();
 	//skills();
 	//auton_r2();
-	chassis.setPose(0, 0, 0);
-	chassis.turnToHeading(90, 5000);
-
 }
 
 /**
@@ -195,7 +191,6 @@ void autonomous() {
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-
 	bool descore_state = false;
 	descore.set_value(descore_state);
 
@@ -220,7 +215,7 @@ void opcontrol() {
 	while (true) {
 		pros::lcd::set_text(1, "Hello PROS User!");
 		lemlib::Pose p = chassis.getPose();
-		master.print(0, 0, "Theta%.10f", p.theta);
+		master.print(0, 0, "X:%.2f Y:%.2f Z:%.2f", p.x, p.y, p.theta);
 
 		// Arcade control scheme
 		int dir = master.get_analog(ANALOG_LEFT_Y);    // Gets amount forward/backward from left joystick

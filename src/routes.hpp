@@ -175,31 +175,26 @@ ASSET(autonl_txt);
 inline lemlib_tarball::Decoder decoder_autonl(autonl_txt);
 
 inline void auton_l(){
-    chassis.setPose(-45.261, 12.247, 90); //Set Robot Ini-State;
-    chassis.turnToHeading(65, 5000);
+    chassis.setPose(-49.22, 10.99, 63); //Set Robot Ini-State;
     delay(10);
     forwardIntakeHood();
-    chassis.moveToPoint(-22.027, 22.29, 5000);
-    chassis.waitUntilDone();
-    chassis.turnToPoint(-47.201, 46.939, 5000);
+    chassis.moveToPoint(-22.027, 22.29, 1500, {.maxSpeed = 50});
+    chassis.turnToHeading(315, 3000);
     delay(10);
     stopIntake();
-    chassis.moveToPoint(-47.201, 46.939, 5000);              
-    chassis.waitUntilDone();
-    chassis.turnToHeading(270, 5000);
+    // match_loader.set_value(true);
+    chassis.moveToPoint(-49, 49, 1500, {.maxSpeed = 50});              
+    chassis.turnToHeading(260, 3000);
     delay(10);
-    chassis.moveToPoint(-26.747, 47.201, 5000, {.forwards=false});
+    forwardIntakeHood();
+    chassis.moveToPoint(-53, 49, 500);
+    chassis.moveToPoint(-24, 49, 1500, {.forwards=false, .maxSpeed = 50});
     chassis.waitUntilDone();
-    forwardIntakeHood();
-    delay(2000);
-    match_loader.set_value(true);        // Match_Loader Down
-    chassis.moveToPoint(-60.837, 46.939, 5000);
-    chassis.waitUntilDone();
-    forwardIntakeHood();
-    delay(1000);
-    stopIntake();
-    chassis.moveToPoint(-26.747, 47.201, 5000, {.forwards=false});
-    forwardIntakeHood();
+    chassis.turnToHeading(330, 1500);
+    chassis.moveToPoint(-35, 59, 1500, {.maxSpeed = 50});
+    chassis.turnToHeading(265, 1500);
+    chassis.moveToPoint(-10, 60, 1500, {.forwards = false, .maxSpeed = 50});
+    
 }
 
 // auton_l route

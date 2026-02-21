@@ -41,24 +41,24 @@ inline lemlib::Drivetrain drivetrain(&left_motors, // left motor group
 inline lemlib::TrackingWheel vertical_tracking_wheel(&vertical_encoder, lemlib::Omniwheel::NEW_275, -0.25);
 
 inline lemlib::ControllerSettings lateral_controller(
-    6,   // kP — proportional gain
+    10,   // kP — proportional gain
     0,    // kI — integral gain
-    7,    // kD — derivative gain
+    0.5,    // kD — derivative gain
     3, // anti windup
     1, // small error range, in inches
-    100, // small error range timeout, in milliseconds
+    50, // small error range timeout, in milliseconds
     3, // large error range, in inches
     500, // large error range timeout, in milliseconds
-    20 // maximum acceleration (slew)
+    30 // maximum acceleration (slew)
 );
 
 inline lemlib::ControllerSettings angular_controller(
     0.92,    // kP — proportional gain
     0.00,    // kI — integral gain
-    0.12,   // kD — derivative gain
+    0.11,   // kD — derivative gain
     3, // anti windup
     1, // small error range, in inches
-    100, // small error range timeout, in milliseconds
+    50, // small error range timeout, in milliseconds
     3, // large error range, in inches
     500, // large error range timeout, in milliseconds
     30 // maximum acceleration (slew)
