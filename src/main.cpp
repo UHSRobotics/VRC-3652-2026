@@ -191,19 +191,10 @@ void autonomous() {
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-	bool descore_state = false;
 	descore.set_value(descore_state);
-
-	bool loader_state = false;
 	match_loader.set_value(loader_state);
-
-	bool lgoal_state = false;
 	low_goal.set_value(lgoal_state);
-
-	bool trapdoorb_state = false;
 	trapdoor_b.set_value(trapdoorb_state);
-
-	bool trapdoorm_state = false;
 	trapdoor_m.set_value(trapdoorm_state);
 
 	//left_motors.set_brake_mode_all(MOTOR_BRAKE_COAST);
@@ -212,6 +203,7 @@ void opcontrol() {
 	left_motors.set_brake_mode_all(MOTOR_BRAKE_HOLD);
 	right_motors.set_brake_mode_all(MOTOR_BRAKE_HOLD);
 
+	bool middle_released = false;
 	while (true) {
 		pros::lcd::set_text(1, "Hello PROS User!");
 		lemlib::Pose p = chassis.getPose();
@@ -223,33 +215,41 @@ void opcontrol() {
 		left_motors.move(dir + turn);                      // Sets left motor voltage
 		right_motors.move(dir - turn);                     // Sets right motor voltage
 
-		//intake control
-		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
-			forwardIntakeHood();
-			trapdoorb_state = true;
-			trapdoorm_state = false;
-			trapdoor_b.set_value(trapdoorb_state);
-			trapdoor_m.set_value(trapdoorm_state);
-		}
-		else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
-			reverseIntakeHood();
-			trapdoorb_state = true;
-			trapdoorm_state = false;
-			trapdoor_b.set_value(trapdoorb_state);
-			trapdoor_m.set_value(trapdoorm_state);
-		}
-		else{
-			stopIntake();
-		}
-
 		// Middle Goal Score
 		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
-			trapdoorb_state = true;
-			trapdoorm_state = true;
-			trapdoor_b.set_value(trapdoorb_state);
-			trapdoor_m.set_value(trapdoorb_state);
+			trapdoor_pos(1);
+			forwardIntakeHood();
+			middle_released = false;
+		}
+		//Long Goal Score
+		else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_X)){
+			trapdoor_pos(2);
 			forwardIntakeHood();
 		}
+		else{
+			if (!middle_released){   // When middle goal is release, set to long goal position, then reset to intake position
+				trapdoor_pos(2);
+				pros::delay(30);
+				trapdoor_pos(0);
+				middle_released = true;
+			}
+		}
+
+		if (middle_released){   // Intake will only run when no goal button are pressed, prevent overwritting the value.
+			//intake control
+			if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
+				trapdoor_pos(0);
+				forwardIntakeHood();
+			} 
+			else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
+				trapdoor_pos(0);
+				reverseIntakeHood();
+			} 
+			else {
+				stopIntake();
+			}
+		}
+
 		// Descore Control
 		if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L2)) {
 			descore_state = !descore_state;
@@ -262,14 +262,6 @@ void opcontrol() {
 			match_loader.set_value(loader_state);
 		}
 
-		//Long Goal Score
-		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_X)){
-			trapdoorb_state = false;
-			trapdoorm_state = false;
-			trapdoor_b.set_value(trapdoorb_state);
-			trapdoor_m.set_value(trapdoorb_state);
-			forwardIntakeHood();
-		}
 		pros::delay(20); // Run for 20 ms then update
 	}
 }

@@ -84,6 +84,31 @@ inline void intakeTask(void *param) {
     }
 }
 
+inline void trapdoor_pos(int state){ // Change the 2 trapdoor piston based on long/middle goal or intake
+    switch(state){
+        case 0:
+            trapdoorb_state = true;
+            trapdoorm_state = false;
+            break;
+        case 1:
+            trapdoorb_state = true;
+            trapdoorm_state = true;
+            break;
+        case 2:
+            trapdoorb_state = false;
+            trapdoorm_state = false; 
+            break;
+        default:
+            trapdoorb_state = true;
+            trapdoorm_state = false;
+            break;
+    }
+    trapdoor_b.set_value(trapdoorb_state);
+    trapdoor_m.set_value(trapdoorm_state);
+    pros::delay(10);
+}
+
+
 // stops all intake moment
 inline void stopIntake(){
     intakeState.store(0);
