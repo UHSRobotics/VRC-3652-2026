@@ -29,11 +29,11 @@ inline pros::adi::DigitalOut descore('A', LOW);
 // Low Goal Piston
 inline pros::adi::DigitalOut low_goal('E', LOW);
 
-bool trapdoorb_state = false;
-bool trapdoorm_state = false;
-bool loader_state = false;
-bool descore_state = false;
-bool lgoal_state = false;
+inline bool trapdoorb_state = false;
+inline bool trapdoorm_state = false;
+inline bool loader_state = false;
+inline bool descore_state = false;
+inline bool lgoal_state = false;
 
 inline lemlib::Drivetrain drivetrain(&left_motors, // left motor group
                               &right_motors, // right motor group

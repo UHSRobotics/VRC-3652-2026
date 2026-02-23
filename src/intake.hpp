@@ -45,45 +45,6 @@ inline void preventStuckHood() {
     } 
 }
 
-inline void intakeTask(void *param) {
-    while(true) {
-        // read the atomic state and store it in a local variable
-        int readState = intakeState.load();
-        switch(readState){
-            case 0:
-                intake.move(0);
-                hood.move(0);
-                break;
-            case 1:
-                intake.move(127);
-                hood.move(127);
-                break;
-            case -1:
-                intake.move(-127);
-                hood.move(-127);
-                break;
-            case 2:
-                intake.move(127);
-                hood.move(-30);
-                break;
-            case -2:
-                intake.move(-127);
-                hood.move(-30);
-                break;
-            case 3:
-                preventStuck();
-                preventStuckHood();
-                //hood.move(127);
-                break;
-            case 4:
-                preventStuck();
-                hood.move(0);
-                break;
-        }
-        pros::delay(10);
-    }
-}
-
 inline void trapdoor_pos(int state){ // Change the 2 trapdoor piston based on long/middle goal or intake
     switch(state){
         case 0:
@@ -108,38 +69,62 @@ inline void trapdoor_pos(int state){ // Change the 2 trapdoor piston based on lo
     pros::delay(10);
 }
 
+inline void intakeTask(void *param) {
+    while(true) {
+        // read the atomic state and store it in a local variable
+        int readState = intakeState.load();
+        switch(readState){
+            case 0:
+                intake.move(0);
+                hood.move(0);
+                break;
+            case 1:
+                intake.move(127);
+                hood.move(127);
+                break;
+            case -1:
+                intake.move(-100);
+                hood.move(-100);
+                break;
+            // case 2:
+            //     intake.move(127);
+            //     hood.move(-30);
+            //     break;
+            // case -2:
+            //     intake.move(-127);
+            //     hood.move(-30);
+            //     break;
+            // case 3:
+            //     preventStuck();
+            //     preventStuckHood();
+            //     //hood.move(127);
+            //     break;
+            // case 4:
+            //     preventStuck();
+            //     hood.move(0);
+            //     break;
+        }
+        pros::delay(10);
+    }
+}
+
 
 // stops all intake moment
-inline void stopIntake(){
+inline void stopIntake(char st){
+    trapdoor_pos(st);
     intakeState.store(0);
 }
 
 // move intake and hood forward
-inline void forwardIntakeHood(){
+inline void forwardIntakeHood(char st){
+    trapdoor_pos(st);
     intakeState.store(1);
 }
 
 // reverses intake and hood
-inline void reverseIntakeHood(){
+inline void reverseIntakeHood(int st){
+    trapdoor_pos(st);
     intakeState.store(-1);
 }
 
-// move only intake forward
-inline void forwardIntake(){
-    intakeState.store(2);
-}
 
-// move only intake forward
-inline void forwardIntakeAuton(){
-    intakeState.store(4);
-}
-
-// move only intake backward
-inline void reverseIntake(){
-    intakeState.store(-2);
-}
-
-// move intake and hood forward and prevent it from being stuck
-inline void forwardIntakeHoodAuton(){
-    intakeState.store(3);
-}

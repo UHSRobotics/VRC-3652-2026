@@ -122,9 +122,8 @@ void initialize() {
 	//pros::lcd::set_text(1, "Hello PROS User!");
 
 	pros::Task intake_task(intakeTask);
-
 	chassis.calibrate();
-	chassis.setPose(0, 0, 90);
+	// chassis.setPose(0,-0,0);
 	autonSelect();
 }
 
@@ -172,9 +171,8 @@ void autonomous() {
 	// 	chassis.setPose(0,0,0);
 	// 	chassis.moveToPoint(0, 4, 5000);
 	// }
-	auton_l();
-	//skills();
-	//auton_r2();
+	// auton_l();
+	auton_r();
 }
 
 /**
@@ -204,6 +202,7 @@ void opcontrol() {
 	right_motors.set_brake_mode_all(MOTOR_BRAKE_HOLD);
 
 	bool middle_released = false;
+	bool scored = false;
 	while (true) {
 		pros::lcd::set_text(1, "Hello PROS User!");
 		lemlib::Pose p = chassis.getPose();
@@ -217,36 +216,36 @@ void opcontrol() {
 
 		// Middle Goal Score
 		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
-			trapdoor_pos(1);
-			forwardIntakeHood();
+			forwardIntakeHood(1);
 			middle_released = false;
+			scored = true;
 		}
 		//Long Goal Score
 		else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_X)){
-			trapdoor_pos(2);
-			forwardIntakeHood();
+			forwardIntakeHood(2);
+			middle_released = false;
+			scored = true;
 		}
 		else{
 			if (!middle_released){   // When middle goal is release, set to long goal position, then reset to intake position
-				trapdoor_pos(2);
-				pros::delay(30);
-				trapdoor_pos(0);
+				stopIntake(2);
+				pros::delay(300);
 				middle_released = true;
+				scored = true;
 			}
 		}
 
-		if (middle_released){   // Intake will only run when no goal button are pressed, prevent overwritting the value.
-			//intake control
-			if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
-				trapdoor_pos(0);
-				forwardIntakeHood();
-			} 
-			else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
-				trapdoor_pos(0);
-				reverseIntakeHood();
-			} 
-			else {
-				stopIntake();
+		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
+			forwardIntakeHood(0);
+			scored = false;
+		} 
+		else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
+			reverseIntakeHood(0);
+			scored = false;
+		} 
+		else {
+			if (!scored){
+				stopIntake(0);
 			}
 		}
 
