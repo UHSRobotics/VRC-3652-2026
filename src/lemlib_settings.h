@@ -38,7 +38,7 @@ inline bool lgoal_state = false;
 inline lemlib::Drivetrain drivetrain(&left_motors, // left motor group
                               &right_motors, // right motor group
                               11.5, // 13.5 inch track width (Unsure now, will change later)
-                              lemlib::Omniwheel::NEW_275, // using new 2.75" omnis
+                              lemlib::Omniwheel::OLD_275, // using new 2.75" omnis
                               450, // drivetrain rpm is 450
                               2 // horizontal drift is 2 
 );
@@ -48,25 +48,25 @@ inline lemlib::TrackingWheel vertical_tracking_wheel(&vertical_encoder, lemlib::
 inline lemlib::ControllerSettings lateral_controller(
     10,   // kP — proportional gain
     0,    // kI — integral gain
-    0.5,    // kD — derivative gain
+    1,    // kD — derivative gain
     3, // anti windup
-    2, // small error range, in inches
-    150, // small error range timeout, in milliseconds
-    6, // large error range, in inches
+    1, // small error range, in inches
+    100, // small error range timeout, in milliseconds
+    3, // large error range, in inches
     500, // large error range timeout, in milliseconds
-    30 // maximum acceleration (slew)
+    20 // maximum acceleration (slew)
 );
 
 inline lemlib::ControllerSettings angular_controller(
-    0.92,    // kP — proportional gain
+    2,    // kP — proportional gain
     0.00,    // kI — integral gain
-    0.11,   // kD — derivative gain
+    1.35,   // kD — derivative gain
     3, // anti windup
-    1.5, // small error range, in inches
-    150, // small error range timeout, in milliseconds
-    4, // large error range, in inches
+    1, // small error range, in inches
+    100, // small error range timeout, in milliseconds
+    3, // large error range, in inches
     500, // large error range timeout, in milliseconds
-    30 // maximum acceleration (slew)
+    0 // maximum acceleration (slew)
 );
 
 inline lemlib::OdomSensors sensors(&vertical_tracking_wheel, nullptr, nullptr, nullptr, &imu); //MIght add horizontal tracking wheel later.

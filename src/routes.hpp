@@ -172,27 +172,28 @@ inline lemlib_tarball::Decoder decoder_autonr2(autonr2_txt);
 
 inline void auton_r(){
     chassis.setPose(-51.22, -11.63, 119);
-    delay(10);
+    // descore.set_value(true);
+    // delay(100);
+    // descore.set_value(false);
     forwardIntakeHood(0);
     chassis.moveToPoint(-24, -24, 1500, {.maxSpeed = 80, .earlyExitRange = 2.0});
     delay(500);
     match_loader.set_value(true);
-    chassis.turnToPoint(-35, -51, 500);
-    chassis.moveToPoint(-35, -51, 1500, {.maxSpeed = 120});              
+    chassis.turnToPoint(-35, -47.5, 500);
+    chassis.moveToPoint(-35, -47.5, 1500, {.maxSpeed = 120});              
     chassis.turnToHeading(270, 500);
     delay(10);
-    chassis.moveToPoint(-60, -51, 1000, {.maxSpeed = 50}, false);
+    chassis.moveToPoint(-60, -47.5, 5000, {.maxSpeed = 70});
     forwardIntakeHood(0);
-    delay(3000);
-    chassis.moveToPoint(-24, -51, 1500, {.forwards=false, .maxSpeed = 120});
+    chassis.moveToPoint(-24, -47.5, 1500, {.forwards=false, .minSpeed = 120});
     chassis.waitUntilDone();
     trapdoor_pos(2);
-    delay(1500);
+    delay(2000);
     chassis.turnToHeading(330, 1000);
     chassis.moveToPoint(-35, -39, 1000, {.maxSpeed = 120});
     chassis.turnToHeading(258, 1000); 
     while(true){
-        chassis.moveToPoint(-7, -39, 1500, {.forwards = false, .maxSpeed = 50});
+        chassis.moveToPoint(-7, -39, 1500, {.forwards = false, .maxSpeed = 70});
     }
 }
 

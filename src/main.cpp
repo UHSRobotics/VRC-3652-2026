@@ -123,7 +123,9 @@ void initialize() {
 
 	pros::Task intake_task(intakeTask);
 	chassis.calibrate();
-	// chassis.setPose(0,-0,0);
+	chassis.setPose(0,0,0);
+	left_motors.set_brake_mode_all(MOTOR_BRAKE_HOLD);
+	right_motors.set_brake_mode_all(MOTOR_BRAKE_HOLD);
 	autonSelect();
 }
 
@@ -198,8 +200,8 @@ void opcontrol() {
 	//left_motors.set_brake_mode_all(MOTOR_BRAKE_COAST);
 	//right_motors.set_brake_mode_all(MOTOR_BRAKE_COAST);
 
-	left_motors.set_brake_mode_all(MOTOR_BRAKE_HOLD);
-	right_motors.set_brake_mode_all(MOTOR_BRAKE_HOLD);
+	// left_motors.set_brake_mode_all(MOTOR_BRAKE_HOLD);
+	// right_motors.set_brake_mode_all(MOTOR_BRAKE_HOLD);
 
 	bool middle_released = false;
 	bool scored = false;

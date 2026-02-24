@@ -110,13 +110,13 @@ inline void intakeTask(void *param) {
 
 
 // stops all intake moment
-inline void stopIntake(char st){
+inline void stopIntake(int st){
     trapdoor_pos(st);
     intakeState.store(0);
 }
 
 // move intake and hood forward
-inline void forwardIntakeHood(char st){
+inline void forwardIntakeHood(int st){
     trapdoor_pos(st);
     intakeState.store(1);
 }
