@@ -41,7 +41,7 @@
 extern bool isIntakeActive;
 
 // SENSORS
-#define INERTIAL 5
+#define INERTIAL 6
 #define VERTICAL_ROTATION 10
 
 // PNEUMATICS

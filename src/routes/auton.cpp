@@ -15,24 +15,37 @@ void auton_r(){
     descore.set_value(false);
     intakemotors.moveForward(127);
     intakemotors.trapdoor_pos(0);
+    // go to blocks in middle
     chassis.moveToPoint(-24, -24, 1050, {.maxSpeed = 80});
     pros::delay(500);
     match_loader.set_value(true);
-    chassis.turnToPoint(-35, -50, 400);
-    chassis.moveToPoint(-35, -50, 650, {.maxSpeed = 120});              
-    chassis.turnToHeading(270, 500);
+    // go to in between long goal and loader
+    // also note the y value in the below two lines are absurdly large but it works somehow
+    chassis.turnToPoint(-40, -59, 400);
+    chassis.moveToPoint(-40, -59, 650, {.maxSpeed = 120}, false);
+    pros::delay(100); 
+    // face loader and go to it        
+    chassis.turnToHeading(270, 500, {}, false);
     pros::delay(10);
-    chassis.moveToPoint(-58, -50, 1750);
+    chassis.moveToPoint(-59, -51, 1750);
+    // score in long goal
     intakemotors.moveForward(127);
     intakemotors.trapdoor_pos(0);
-    chassis.moveToPoint(-24, -48, 2000, {.forwards=false, .minSpeed = 127});
+    chassis.moveToPoint(-24, -51, 2200, {.forwards=false, .minSpeed = 80});
+    pros::delay(100);
     intakemotors.trapdoor_pos(2);
+    // funny alignment for setting up wing push
     chassis.turnToHeading(330, 3000);
-    chassis.moveToPoint(-33, -41, 3000, {.maxSpeed = 120});
+    chassis.moveToPoint(-33, -40.6, 3000, {.maxSpeed = 120});
     chassis.turnToHeading(270, 3000); 
+    // push le blocks in
     while(true){
         chassis.moveToPoint(-8, -39, 1500, {.forwards = false, .maxSpeed = 70});
     }
+}
+
+void auton_l(){
+
 }
 
 // // Red Left
