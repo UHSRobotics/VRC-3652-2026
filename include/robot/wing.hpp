@@ -3,12 +3,10 @@
 #include "pros/rtos.hpp"
 #include "pros/misc.hpp"
 
-class DoInker {
+class Wing {
   public:
-    DoInker();
+    Wing();
     void toggle();
     void run(pros::controller_digital_e_t button);
-    void activate();
-    void deactivate();
     bool getState() const;
 };

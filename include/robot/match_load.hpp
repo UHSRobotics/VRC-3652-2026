@@ -3,12 +3,10 @@
 #include "pros/rtos.hpp"
 #include "pros/misc.hpp"
 
-class Clamp {
+class Match_load {
   public:
-    Clamp();
+    Match_load();
     void toggle();
     void run(pros::controller_digital_e_t button);
-    void clampStake();
-    void deClamp();
     bool getState() const;
 };

@@ -2,8 +2,8 @@
 #include "../../include/globals.hpp"
 
 #define DEFAULT_DELAY_LENGTH 15
-#define LEFT_ADJUST 0.9
-#define RIGHT_ADJUST 0.92
+#define LEFT_ADJUST 1
+#define RIGHT_ADJUST 1
 
 // Default drive selection
 Drivetrain::DRIVE_MODE Drivetrain::driveMode = CURVATURE_DRIVE;

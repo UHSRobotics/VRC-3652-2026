@@ -3,13 +3,6 @@
 #include "api.h"
 #include "lemlib/api.hpp"
 
-// COLOR SORTING
-enum class DONUT_COLOR {
-    NONE,
-    RED_RING,
-    BLUE_RING
-};
-
 // GEARSET
 #define RED pros::E_MOTOR_GEAR_RED
 #define GREEN pros::E_MOTOR_GEAR_GREEN
@@ -27,45 +20,42 @@ enum class DONUT_COLOR {
 #define SIZE_4 4
 
 // CHASSIS PORTS
-#define LEFT_FRONT_MOTOR_PORT -7
-#define LEFT_MIDDLE_MOTOR_PORT -8
-#define LEFT_BACK_MOTOR_PORT -10
-#define RIGHT_FRONT_MOTOR_PORT 4
-#define RIGHT_MIDDLE_MOTOR_PORT 3
-#define RIGHT_BACK_MOTOR_PORT 6
+#define LEFT_FRONT_MOTOR_PORT 8
+#define LEFT_MIDDLE_MOTOR_PORT -9
+#define LEFT_BACK_MOTOR_PORT -7
+#define RIGHT_FRONT_MOTOR_PORT -1
+#define RIGHT_MIDDLE_MOTOR_PORT 2
+#define RIGHT_BACK_MOTOR_PORT 3
 
 // CHASSIS VALUES
 #define RPM 450
-#define TRACK_WIDTH 11.75
+#define TRACK_WIDTH 11.5
 // Left to Center
-#define VERTICAL_DISPLACEMENT -2.8
+#define VERTICAL_DISPLACEMENT -0.25
 // Back to Center
-#define HORIZONTAL_DISPLACEMENT -2.75
+// #define HORIZONTAL_DISPLACEMENT 0.00
 
 // SUBSYSTEMS
-#define ARM_MOTOR_LEFT_PORT -12
-#define ARM_MOTOR_RIGHT_PORT 20
-extern bool isArmActive;
-
-#define INTAKE_MOTOR_PORT -1
-#define INDEXER_MOTOR_PORT -1
+#define INTAKE_MOTOR1_PORT 11
+#define INTAKE_MOTOR2_PORT -12
 extern bool isIntakeActive;
 
 // SENSORS
-#define INERTIAL 13
-#define VERTICAL_ROTATION -15
-#define HORIZONTAL_ROTATION -14
+#define INERTIAL 5
+#define VERTICAL_ROTATION 10
 
 // PNEUMATICS
-#define MOGO_CLAMP_PORT 'A'
-#define INTAKE_PISTON_PORT 'G'
-#define DOINKER_LEFT_PORT 'H'
-#define DOINKER_RIGHT_PORT 'B'
+#define TRAPDOOR_B 'H'
+#define TRAPDOOR_M 'G'
+#define MATCH_LOADER 'B'
+#define DESCORE 'A'
 
 // TOGGLE VARIABLES
-extern bool isClamped;
-extern bool isDoinkerDown;
-extern bool isArmUp;
+extern int intake_state;
+extern bool trapdoorb_state;
+extern bool trapdoorm_state;
+extern bool loader_state;
+extern bool descore_state;
 
 // CONTROLLER
 #define CONTROLLER pros::E_CONTROLLER_MASTER
@@ -100,23 +90,22 @@ extern pros::Motor_Group leftMotors;
 extern pros::Motor_Group rightMotors;
 
 // SUBSYSTEMS DEVICES
-extern pros::Motor armMotor;
-
 extern pros::Motor leftIntakeMotor;
 extern pros::Motor rightIntakeMotor;
 
 extern pros::Motor_Group intakeMotors;
 
 // SENSOR DEVICES
-extern pros::Optical optical;
+// extern pros::Optical optical;
 extern pros::Imu inertial;
 extern pros::Rotation verticalRotation;
 // extern pros::Rotation horizontalRotation;
 
 // PNEUMATIC DEVICES
-extern pros::ADIDigitalOut mogoClamp;
-extern pros::ADIDigitalOut armPiston;
-extern pros::ADIDigitalOut doInker;
+extern pros::ADIDigitalOut trapdoor_b;
+extern pros::ADIDigitalOut trapdoor_m;
+extern pros::ADIDigitalOut match_loader;
+extern pros::ADIDigitalOut descore;
 
 // CONTROLLER DEVICES
 extern pros::Controller controller;
@@ -127,7 +116,7 @@ extern lemlib::Drivetrain drivetrain;
 extern lemlib::ExpoDriveCurve steerCurve;
 extern lemlib::ExpoDriveCurve throttleCurve;
 // ODOM
-// extern lemlib::TrackingWheel verticalTracking;
+extern lemlib::TrackingWheel verticalTracking;
 // extern lemlib::TrackingWheel horizontalTracking;
 extern lemlib::OdomSensors odomSensors;
 extern lemlib::ControllerSettings lateralPID;

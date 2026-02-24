@@ -29,30 +29,55 @@ void Intake::deactivate() {
   stop();
 }
 
-void Intake::holdControl(pros::controller_digital_e_t intakeButton, pros::controller_digital_e_t outtakeButton) {
-  if (controller.get_digital(intakeButton)) {
-    moveForward(127);
-    isIntakeActive = true;
-  } else if (controller.get_digital(outtakeButton)) {
-    moveBackward(127);
-    isIntakeActive = true;
-  } else {
-    deactivate();
-    isIntakeActive = false;
-  }
+void Intake::trapdoor_pos(int state){ // Change the 2 trapdoor piston based on long/middle goal or intake
+    switch(state){
+        case 0:
+            trapdoorb_state = true;
+            trapdoorm_state = false;
+            break;
+        case 1:
+            trapdoorb_state = true;
+            trapdoorm_state = true;
+            break;
+        case 2:
+            trapdoorb_state = false;
+            trapdoorm_state = false; 
+            break;
+        default:
+            trapdoorb_state = true;
+            trapdoorm_state = false;
+            break;
+    }
+    trapdoor_b.set_value(trapdoorb_state);
+    trapdoor_m.set_value(trapdoorm_state);
+    pros::delay(10);
 }
 
-void Intake::toggleControl(pros::controller_digital_e_t intakeButton, pros::controller_digital_e_t outtakeButton) {
-  if (controller.get_digital(intakeButton) && controller.get_digital(outtakeButton)) {
-    deactivate();
-    isIntakeActive = false;
-  } else if (controller.get_digital(intakeButton)) {
-    controller.print(1, 1, "Intake");
+void Intake::holdControl(pros::controller_digital_e_t intakeButton, pros::controller_digital_e_t outtakeButton, pros::controller_digital_e_t middleGoalButton, pros::controller_digital_e_t longGoalButton) {
+  if (controller.get_digital(intakeButton)) {
+    intake_state = 0;
     moveForward(127);
     isIntakeActive = true;
-  } else if (controller.get_digital(outtakeButton)) {
-    controller.print(1, 1, "Outtake");
+  } 
+  else if (controller.get_digital(outtakeButton)) {
+    intake_state = 0;
     moveBackward(127);
     isIntakeActive = true;
+  } 
+  else if (controller.get_digital(middleGoalButton)) {
+    intake_state = 1;
+    moveForward(127);
+    isIntakeActive = true;
+  } 
+  else if (controller.get_digital(longGoalButton)) {
+    intake_state = 2;
+    moveForward(127);
+    isIntakeActive = true;
+  } 
+  else {
+    deactivate();
+    isIntakeActive = false;
   }
+  trapdoor_pos(intake_state);
 }
+
