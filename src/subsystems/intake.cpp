@@ -44,7 +44,7 @@ void Intake::trapdoor_pos(int state){ // Change the 2 trapdoor piston based on l
             trapdoorm_state = false; 
             break;
         default:
-            trapdoorb_state = true;
+            trapdoorb_state = false;
             trapdoorm_state = false;
             break;
     }
@@ -77,6 +77,9 @@ void Intake::holdControl(pros::controller_digital_e_t intakeButton, pros::contro
   else {
     deactivate();
     isIntakeActive = false;
+  }
+  if(!isIntakeActive){
+    intake_state = 2;
   }
   trapdoor_pos(intake_state);
 }
