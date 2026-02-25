@@ -92,6 +92,49 @@ void square_auto(){
   chassis.turnToHeading(0,squareTimeout);
 }
 
+inline void auton_sawp(){
+    chassis.setPose(-51.22, -11.63, 119);
+    descore.set_value(true);
+    pros::delay(100);
+    descore.set_value(false);
+    intakemotors.moveForward(127);
+    intakemotors.trapdoor_pos(0);
+    chassis.moveToPoint(-24, -24, 1500, {.maxSpeed = 60});
+    pros::delay(500);
+    match_loader.set_value(true);
+    chassis.turnToHeading(225, 3000);
+    chassis.moveToPoint(-49, -49, 1500, {.maxSpeed = 120});              
+    chassis.turnToHeading(275, 500);
+    pros::delay(10);
+    intakemotors.moveForward(127);
+    intakemotors.trapdoor_pos(0);
+    chassis.moveToPoint(-53, -49, 500);
+    pros::delay(2000);
+    chassis.moveToPoint(-24, -48, 1500, {.forwards=false, .maxSpeed = 120});
+    chassis.waitUntilDone();
+    intakemotors.trapdoor_pos(2);
+    pros::delay(2000);
+    intakemotors.trapdoor_pos(0);
+    match_loader.set_value(false);
+    chassis.turnToHeading(0, 1000);
+    chassis.moveToPoint(-22.027, 22.29, 1500, {.maxSpeed = 120, .earlyExitRange = 2.0});
+    pros::delay(700);
+    match_loader.set_value(true);
+    chassis.turnToHeading(315, 3000);
+    chassis.moveToPoint(-15, 15, 1500, {.forwards = false, .maxSpeed = 120, .earlyExitRange = 2.0});
+    intakemotors.trapdoor_pos(1);
+    pros::delay(1000);
+    intakemotors.trapdoor_pos(0);
+    chassis.moveToPoint(-48, 48, 1500, {.maxSpeed = 120, .earlyExitRange = 2.0});              
+    chassis.turnToHeading(265, 500);
+    chassis.moveToPoint(-53, 48, 500);
+    pros::delay(2000);
+    chassis.moveToPoint(-24, 48, 1500, {.forwards=false, .maxSpeed = 120, .earlyExitRange = 2.0});
+    chassis.waitUntilDone();
+    intakemotors.trapdoor_pos(2);
+    pros::delay(3000);
+}
+
 // // Red Left
 void Autonomous::Auton1() {
 //   chassis.setPose(0, 0, 0);
