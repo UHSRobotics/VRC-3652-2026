@@ -44,7 +44,7 @@ void Intake::trapdoor_pos(int state){ // Change the 2 trapdoor piston based on l
             trapdoorm_state = false; 
             break;
         default:
-            trapdoorb_state = false;
+            trapdoorb_state = true;
             trapdoorm_state = false;
             break;
     }
@@ -52,6 +52,8 @@ void Intake::trapdoor_pos(int state){ // Change the 2 trapdoor piston based on l
     trapdoor_m.set_value(trapdoorm_state);
     pros::delay(10);
 }
+
+bool middle_pressed = false;
 
 void Intake::holdControl(pros::controller_digital_e_t intakeButton, pros::controller_digital_e_t outtakeButton, pros::controller_digital_e_t middleGoalButton, pros::controller_digital_e_t longGoalButton) {
   if (controller.get_digital(intakeButton)) {
@@ -68,6 +70,7 @@ void Intake::holdControl(pros::controller_digital_e_t intakeButton, pros::contro
     intake_state = 1;
     moveForward(127);
     isIntakeActive = true;
+    middle_pressed = true;
   } 
   else if (controller.get_digital(longGoalButton)) {
     intake_state = 2;
@@ -78,8 +81,9 @@ void Intake::holdControl(pros::controller_digital_e_t intakeButton, pros::contro
     deactivate();
     isIntakeActive = false;
   }
-  if(!isIntakeActive){
+  if (middle_pressed && !isIntakeActive){
     intake_state = 2;
+    middle_pressed = false;
   }
   trapdoor_pos(intake_state);
 }
