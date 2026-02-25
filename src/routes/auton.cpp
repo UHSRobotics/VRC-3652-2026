@@ -21,31 +21,43 @@ void auton_r(){
     match_loader.set_value(true);
     // go to in between long goal and loader
     // also note the y value in the below two lines are absurdly large but it works somehow
-    chassis.turnToPoint(-40, -59, 400);
-    chassis.moveToPoint(-40, -59, 650, {.maxSpeed = 120}, false);
-    pros::delay(100); 
+    //chassis.turnToPoint(-40, -49, 400);
+    chassis.moveToPoint(-40, -45, 650, {.maxSpeed = 120, .earlyExitRange=2});
     // face loader and go to it        
-    chassis.turnToHeading(270, 500, {}, false);
-    pros::delay(10);
-    chassis.moveToPoint(-59, -51, 1750);
+    //chassis.turnToHeading(270, 500, {}, false);
+    chassis.moveToPoint(-60, -45, 1450,{},false);
+    match_loader.set_value(true);
     // score in long goal
     intakemotors.moveForward(127);
     intakemotors.trapdoor_pos(0);
-    chassis.moveToPoint(-24, -51, 2200, {.forwards=false, .minSpeed = 80});
-    pros::delay(100);
+    chassis.moveToPoint(-24, -45, 3000, {.forwards=false, .minSpeed = 80});
+    pros::delay(400);
     intakemotors.trapdoor_pos(2);
     // funny alignment for setting up wing push
-    chassis.turnToHeading(330, 3000);
-    chassis.moveToPoint(-33, -40.6, 3000, {.maxSpeed = 120});
-    chassis.turnToHeading(270, 3000); 
+    chassis.turnToHeading(330, 1000);
+    chassis.moveToPoint(-33, -34.8, 1000, {.maxSpeed = 120});
+    chassis.turnToHeading(270, 1000); 
     // push le blocks in
     while(true){
-        chassis.moveToPoint(-8, -39, 1500, {.forwards = false, .maxSpeed = 70});
+        chassis.moveToPoint(-10, -39, 1500, {.forwards = false, .maxSpeed = 70});
     }
 }
 
 void auton_l(){
 
+}
+
+int squareTimeout = 1250;
+void square_auto(){
+  chassis.setPose(0, 0, 0);
+  chassis.moveToPoint(0,48,squareTimeout, {.maxSpeed=120});
+  //chassis.turnToPoint(-48,48,squareTimeout, {.maxSpeed=120});
+  chassis.moveToPoint(-48,48,squareTimeout, {.maxSpeed=120});
+  //chassis.turnToPoint(-48,0,squareTimeout, {.maxSpeed=120});
+  chassis.moveToPoint(-48,0,squareTimeout, {.maxSpeed=120});
+  //chassis.turnToPoint(0,0,squareTimeout, {.maxSpeed=120});
+  chassis.moveToPoint(0,0,squareTimeout, {.maxSpeed=120});
+  chassis.turnToHeading(0,squareTimeout);
 }
 
 // // Red Left
@@ -152,7 +164,7 @@ void Autonomous::AutoDrive() {
   // Compare the current auton value to run the autonomous routine
  switch (Autonomous::auton) {
    case RED_LEFT:
-      Auton1();
+      auton_l();
       break;
    case RED_RIGHT:
       auton_r();
@@ -161,7 +173,7 @@ void Autonomous::AutoDrive() {
       Auton3();
       break;
    case BLUE_RIGHT:
-      Auton4();
+      square_auto();
       break;
    case SKILLS:
       Auton5();
