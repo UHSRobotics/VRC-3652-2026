@@ -3,45 +3,10 @@
 #include "../../include/robot/intake.hpp"
 
 // Default Starting Route
-Autonomous::ROUTINE Autonomous::auton = RED_LEFT;
-std::string Autonomous::autonName = "Red Left";
+Autonomous::ROUTINE Autonomous::auton = SAWP;
+std::string Autonomous::autonName = "Solo - AWP";
 
 Intake intakemotors;
-
-void auton_r(){
-    chassis.setPose(-51.22, -11.63, 119);
-    descore.set_value(true);
-    pros::delay(100);
-    descore.set_value(false);
-    intakemotors.moveForward(127);
-    intakemotors.trapdoor_pos(0);
-    // go to blocks in middle
-    chassis.moveToPoint(-24, -24, 1050, {.maxSpeed = 80});
-    pros::delay(500);
-    match_loader.set_value(true);
-    // go to in between long goal and loader
-    // also note the y value in the below two lines are absurdly large but it works somehow
-    //chassis.turnToPoint(-40, -49, 400);
-    chassis.moveToPoint(-40, -45, 650, {.maxSpeed = 120, .earlyExitRange=2});
-    // face loader and go to it        
-    //chassis.turnToHeading(270, 500, {}, false);
-    chassis.moveToPoint(-60, -45, 1450,{},false);
-    match_loader.set_value(true);
-    // score in long goal
-    intakemotors.moveForward(127);
-    intakemotors.trapdoor_pos(0);
-    chassis.moveToPoint(-24, -45, 3000, {.forwards=false, .minSpeed = 80});
-    pros::delay(400);
-    intakemotors.trapdoor_pos(2);
-    // funny alignment for setting up wing push
-    chassis.turnToHeading(330, 1000);
-    chassis.moveToPoint(-33, -34.8, 1000, {.maxSpeed = 120});
-    chassis.turnToHeading(270, 1000); 
-    // push le blocks in
-    while(true){
-        chassis.moveToPoint(-10, -39, 1500, {.forwards = false, .maxSpeed = 70});
-    }
-}
 
 void auton_l(){
     chassis.setPose(-51.22, 11.63, 61);
@@ -57,15 +22,15 @@ void auton_l(){
     // go to in between long goal and loader
     // also note the y value in the below two lines are absurdly large but it works somehow
     //chassis.turnToPoint(-40, -49, 400);
-    chassis.moveToPoint(-40, 46.7, 650, {.maxSpeed = 120, .earlyExitRange=2});
+    chassis.moveToPoint(-40, 46.7, 650, {.maxSpeed = 120});
     // face loader and go to it        
     //chassis.turnToHeading(270, 500, {}, false);
-    chassis.moveToPoint(-64, 45, 1450,{},false);
+    chassis.moveToPoint(-64, 46, 1550,{.minSpeed = 80},false);
     match_loader.set_value(true);
     // score in long goal
     intakemotors.moveForward(127);
     intakemotors.trapdoor_pos(0);
-    chassis.moveToPoint(-24, 48, 3000, {.forwards=false, .minSpeed = 80});
+    chassis.moveToPoint(-24, 50, 3000, {.forwards=false, .minSpeed = 80});
     pros::delay(400);
     intakemotors.trapdoor_pos(2);
     match_loader.set_value(false);
@@ -76,6 +41,41 @@ void auton_l(){
     // push le blocks in
     while(true){
         chassis.moveToPoint(-14, 60, 1500, {.forwards = false, .maxSpeed = 80});
+    }
+}
+
+void auton_r(){
+    chassis.setPose(-51.22, -11.63, 119);
+    descore.set_value(true);
+    pros::delay(100);
+    descore.set_value(false);
+    intakemotors.moveForward(127);
+    intakemotors.trapdoor_pos(0);
+    // go to blocks in middle
+    chassis.moveToPoint(-24, -24, 1050, {.maxSpeed = 80});
+    pros::delay(500);
+    match_loader.set_value(true);
+    // go to in between long goal and loader
+    // also note the y value in the below two lines are absurdly large but it works somehow
+    //chassis.turnToPoint(-40, -49, 400);
+    chassis.moveToPoint(-45, -47, 650, {.maxSpeed = 120});
+    // face loader and go to it        
+    //chassis.turnToHeading(270, 500, {}, false);
+    chassis.moveToPoint(-65, -48, 1450,{.maxSpeed = 80},false);
+    match_loader.set_value(true);
+    // score in long goal
+    intakemotors.moveForward(127);
+    intakemotors.trapdoor_pos(0);
+    chassis.moveToPoint(-24, -46, 3000, {.forwards=false, .minSpeed = 80});
+    pros::delay(400);
+    intakemotors.trapdoor_pos(2);
+    // funny alignment for setting up wing push
+    chassis.turnToHeading(330, 1000);
+    chassis.moveToPoint(-33, -35, 1000, {.maxSpeed = 120});
+    chassis.turnToHeading(270, 1000); 
+    // push le blocks in
+    while(true){
+        chassis.moveToPoint(-10, -37, 1500, {.forwards = false, .maxSpeed = 70});
     }
 }
 
@@ -92,47 +92,68 @@ void square_auto(){
   chassis.turnToHeading(0,squareTimeout);
 }
 
-inline void auton_sawp(){
+void sawp(){
     chassis.setPose(-51.22, -11.63, 119);
     descore.set_value(true);
     pros::delay(100);
     descore.set_value(false);
     intakemotors.moveForward(127);
     intakemotors.trapdoor_pos(0);
-    chassis.moveToPoint(-24, -24, 1500, {.maxSpeed = 60});
+    // go to blocks in middle
+    chassis.moveToPoint(-24, -24, 1050, {.maxSpeed = 80});
     pros::delay(500);
     match_loader.set_value(true);
-    chassis.turnToHeading(225, 3000);
-    chassis.moveToPoint(-49, -49, 1500, {.maxSpeed = 120});              
-    chassis.turnToHeading(275, 500);
-    pros::delay(10);
+    // go to in between long goal and loader
+    // also note the y value in the below two lines are absurdly large but it works somehow
+    //chassis.turnToPoint(-40, -49, 400);
+    chassis.moveToPoint(-45, -47, 650, {.maxSpeed = 120});
+    // face loader and go to it        
+    //chassis.turnToHeading(270, 500, {}, false);
+    chassis.moveToPoint(-63, -45, 1450,{.minSpeed = 70}, false);
+    match_loader.set_value(true);
+    // score in long goal
     intakemotors.moveForward(127);
     intakemotors.trapdoor_pos(0);
-    chassis.moveToPoint(-53, -49, 500);
-    pros::delay(2000);
-    chassis.moveToPoint(-24, -48, 1500, {.forwards=false, .maxSpeed = 120});
-    chassis.waitUntilDone();
+    chassis.moveToPoint(-24, -45, 2100, {.forwards=false, .minSpeed = 80});
+    pros::delay(400);
     intakemotors.trapdoor_pos(2);
-    pros::delay(2000);
+    pros::delay(1700);
     intakemotors.trapdoor_pos(0);
+    //Turn to face heading 0;
+    chassis.turnToHeading(0, 500, {.minSpeed = 127});
+    chassis.setPose(-25.34, -41.42, chassis.getPose().theta);
+    pros::delay(10);
     match_loader.set_value(false);
-    chassis.turnToHeading(0, 1000);
-    chassis.moveToPoint(-22.027, 22.29, 1500, {.maxSpeed = 120, .earlyExitRange = 2.0});
-    pros::delay(700);
+    chassis.moveToPoint(-25, 0, 600, {.maxSpeed = 120, .earlyExitRange = 2.0});
+    chassis.moveToPoint(-25, 23, 1500, {.maxSpeed = 80});
+    pros::delay(500);
     match_loader.set_value(true);
-    chassis.turnToHeading(315, 3000);
-    chassis.moveToPoint(-15, 15, 1500, {.forwards = false, .maxSpeed = 120, .earlyExitRange = 2.0});
+    //Reach middle goal
+    chassis.turnToHeading(-45, 400);
+    intakemotors.moveForward(127);
+    chassis.moveToPoint(-9, 9, 1600, {.forwards = false, .maxSpeed = 120});
+    pros::delay(900);
     intakemotors.trapdoor_pos(1);
-    pros::delay(1000);
-    intakemotors.trapdoor_pos(0);
-    chassis.moveToPoint(-48, 48, 1500, {.maxSpeed = 120, .earlyExitRange = 2.0});              
-    chassis.turnToHeading(265, 500);
-    chassis.moveToPoint(-53, 48, 500);
-    pros::delay(2000);
-    chassis.moveToPoint(-24, 48, 1500, {.forwards=false, .maxSpeed = 120, .earlyExitRange = 2.0});
-    chassis.waitUntilDone();
+    pros::delay(800);
     intakemotors.trapdoor_pos(2);
-    pros::delay(3000);
+    pros::delay(100);
+    intakemotors.trapdoor_pos(0);
+    pros::delay(10);
+    //Continue remaining of Left Rush Auton
+    // go to in between long goal and loader
+    // also note the y value in the below two lines are absurdly large but it works somehow
+    chassis.moveToPoint(-40, 46.7, 650, {.maxSpeed = 120});
+    match_loader.set_value(true);
+    // face loader and go to it        
+    //chassis.turnToHeading(270, 500, {}, false);
+    chassis.moveToPoint(-67, 45, 1550,{.minSpeed = 80},false);
+    // score in long goal
+    intakemotors.moveForward(127);
+    intakemotors.trapdoor_pos(0);
+    chassis.moveToPoint(-24, 50, 3000, {.forwards=false, .maxSpeed = 100});
+    pros::delay(500);
+    intakemotors.trapdoor_pos(2);
+    match_loader.set_value(false);
 }
 
 // // Red Left
@@ -238,14 +259,17 @@ void Autonomous::Auton5() {
 void Autonomous::AutoDrive() {
   // Compare the current auton value to run the autonomous routine
  switch (Autonomous::auton) {
-   case RED_LEFT:
+   case LEFT_RUSH:
       auton_l();
       break;
-   case RED_RIGHT:
+   case RIGHT_RUSH:
       auton_r();
       break;
+   case SAWP:
+      sawp();
+      break;
    case BLUE_LEFT:
-      Auton3();
+      Auton1();
       break;
    case BLUE_RIGHT:
       square_auto();
@@ -259,13 +283,16 @@ void Autonomous::AutoDrive() {
 void Autonomous::AutonSwitcher(int autonNum) {
   switch (autonNum) {
   case 1:
-    Autonomous::autonName = "Red Left";
-    Autonomous::auton = RED_LEFT;
+    Autonomous::autonName = "LEFT_RUSH";
+    Autonomous::auton = LEFT_RUSH;
     break;
   case 2:
-    Autonomous::autonName = "Red Right";
-    Autonomous::auton = RED_RIGHT;
+    Autonomous::autonName = "RIGHT_RUSH";
+    Autonomous::auton = RIGHT_RUSH;
     break;
+  case 3:
+    Autonomous::autonName = "Solo - AWP";
+    Autonomous::auton = SAWP;
   case -1:
     Autonomous::autonName = "Blue Left";
     Autonomous::auton = BLUE_LEFT;

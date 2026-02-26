@@ -5,7 +5,7 @@
 
 class Autonomous {
   public:
-    enum ROUTINE { RED_LEFT = 1, RED_RIGHT = 2, BLUE_LEFT = -1, BLUE_RIGHT = -2, SKILLS = 0 };
+    enum ROUTINE { LEFT_RUSH = 1, RIGHT_RUSH = 2, SAWP = 3, BLUE_LEFT = -1, BLUE_RIGHT = -2, SKILLS = 0 };
 
     /**
      * @brief Sets number of the autonomous program to use
