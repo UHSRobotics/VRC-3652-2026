@@ -25,7 +25,8 @@ void auton_l(){
     chassis.moveToPoint(-40, 46.7, 650, {.maxSpeed = 120});
     // face loader and go to it        
     //chassis.turnToHeading(270, 500, {}, false);
-    chassis.moveToPoint(-64, 46, 1550,{.minSpeed = 80},false);
+    chassis.moveToPoint(-52, 46.5, 200, {.maxSpeed = 120, .earlyExitRange = 2.0});
+    chassis.moveToPoint(-64, 46, 1350,{.maxSpeed = 80},false);
     match_loader.set_value(true);
     // score in long goal
     intakemotors.moveForward(127);
@@ -61,7 +62,8 @@ void auton_r(){
     chassis.moveToPoint(-45, -47, 650, {.maxSpeed = 120});
     // face loader and go to it        
     //chassis.turnToHeading(270, 500, {}, false);
-    chassis.moveToPoint(-65, -48, 1450,{.maxSpeed = 80},false);
+    chassis.moveToPoint(-52, -47.8, 200, {.maxSpeed = 120, .earlyExitRange = 2.0});
+    chassis.moveToPoint(-65, -48, 1250,{.maxSpeed = 80},false);
     match_loader.set_value(true);
     // score in long goal
     intakemotors.moveForward(127);
@@ -107,9 +109,10 @@ void sawp(){
     // also note the y value in the below two lines are absurdly large but it works somehow
     //chassis.turnToPoint(-40, -49, 400);
     chassis.moveToPoint(-45, -47, 650, {.maxSpeed = 120});
+    chassis.moveToPoint(-52, -46.5, 200, {.maxSpeed = 120, .earlyExitRange = 2.0});
     // face loader and go to it        
     //chassis.turnToHeading(270, 500, {}, false);
-    chassis.moveToPoint(-63, -45, 1450,{.minSpeed = 70}, false);
+    chassis.moveToPoint(-63, -45, 1250,{.maxSpeed = 80}, false);
     match_loader.set_value(true);
     // score in long goal
     intakemotors.moveForward(127);
@@ -143,10 +146,11 @@ void sawp(){
     // go to in between long goal and loader
     // also note the y value in the below two lines are absurdly large but it works somehow
     chassis.moveToPoint(-40, 46.7, 650, {.maxSpeed = 120});
+    chassis.moveToPoint(-52, 46, 200, {.maxSpeed = 120, .earlyExitRange = 2.0});
     match_loader.set_value(true);
     // face loader and go to it        
     //chassis.turnToHeading(270, 500, {}, false);
-    chassis.moveToPoint(-67, 45, 1550,{.minSpeed = 80},false);
+    chassis.moveToPoint(-67, 45, 1350,{.maxSpeed = 80},false);
     // score in long goal
     intakemotors.moveForward(127);
     intakemotors.trapdoor_pos(0);
