@@ -103,7 +103,7 @@ void sawp(){
     intakemotors.trapdoor_pos(0);
     // go to blocks in middle
     chassis.moveToPoint(-24, -24, 1050, {.maxSpeed = 80});
-    pros::delay(500);
+    pros::delay(550);
     match_loader.set_value(true);
     // go to in between long goal and loader
     // also note the y value in the below two lines are absurdly large but it works somehow
@@ -112,12 +112,12 @@ void sawp(){
     chassis.moveToPoint(-52, -46.5, 200, {.maxSpeed = 120, .earlyExitRange = 2.0});
     // face loader and go to it        
     //chassis.turnToHeading(270, 500, {}, false);
-    chassis.moveToPoint(-63, -45, 1250,{.maxSpeed = 80}, false);
+    chassis.moveToPoint(-64, -46, 1250,{.maxSpeed = 80}, false);
     match_loader.set_value(true);
     // score in long goal
     intakemotors.moveForward(127);
     intakemotors.trapdoor_pos(0);
-    chassis.moveToPoint(-24, -45, 2100, {.forwards=false, .minSpeed = 80});
+    chassis.moveToPoint(-24, -47, 2100, {.forwards=false, .minSpeed = 80});
     pros::delay(400);
     intakemotors.trapdoor_pos(2);
     pros::delay(1700);
@@ -146,11 +146,11 @@ void sawp(){
     // go to in between long goal and loader
     // also note the y value in the below two lines are absurdly large but it works somehow
     chassis.moveToPoint(-40, 46.7, 650, {.maxSpeed = 120});
-    chassis.moveToPoint(-52, 46, 200, {.maxSpeed = 120, .earlyExitRange = 2.0});
+    chassis.moveToPoint(-52, 46, 200, {.maxSpeed = 120, .earlyExitRange = 1.0});
     match_loader.set_value(true);
     // face loader and go to it        
     //chassis.turnToHeading(270, 500, {}, false);
-    chassis.moveToPoint(-67, 45, 1350,{.maxSpeed = 80},false);
+    chassis.moveToPoint(-67, 45, 1350,{.maxSpeed = 70},false);
     // score in long goal
     intakemotors.moveForward(127);
     intakemotors.trapdoor_pos(0);
