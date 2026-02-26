@@ -156,6 +156,123 @@ void sawp(){
     match_loader.set_value(false);
 }
 
+// 0 blocking
+// 1 middle goal
+// 2 long goal
+
+void skills() {
+  chassis.setPose(-43.905, 13.645, 90);
+  descore.set_value(true);
+  intakemotors.trapdoor_pos(0);
+  
+  // MIDDLE 2 BLOCKS
+  // grab block from middle and score two red in high middle goal
+  chassis.moveToPoint(-32.29, 20.675, 5000);
+  chassis.moveToPoint(-13.95, 13.645, 5000,{.forwards=false},false);
+  pros::delay(100);
+  intakemotors.trapdoor_pos(0);
+  pros::delay(500);
+  intakemotors.trapdoor_pos(1);
+
+  // LONG GOAL 1
+  // go to loader
+  chassis.moveToPoint(-48.185, 46.656, 5000);
+  chassis.turnToPoint(-57.202, 46.656, 5000,{},false);
+  match_loader.set_value(true);
+  pros::delay(100);
+  chassis.moveToPoint(-57.202, 46.656, 5000);
+  pros::delay(1000);
+  // go to opposite side of field
+  chassis.moveToPoint(-48.185, 46.656, 5000,{.forwards=false},false);
+  match_loader.set_value(false);
+  chassis.moveToPoint(-41.613, 57.355, 5000);
+  chassis.turnToPoint(41.833, 58.883, 5000);
+  chassis.moveToPoint(41.833, 58.883, 5000);
+  chassis.moveToPoint(43.361, 46.656, 5000);
+  // score on long goal
+  chassis.turnToPoint(32.663, 46.351, 5000, {.forwards=false});
+  chassis.moveToPoint(32.663, 46.351, 5000, {.forwards=false},false);
+  intakemotors.trapdoor_pos(2);
+  pros::delay(2000);
+  intakemotors.trapdoor_pos(0);
+  // go to loader
+  match_loader.set_value(true);
+  chassis.moveToPoint(61.09, 46.045, 5000,{},false);
+  pros::delay(1000);
+  // score on long goal again
+  chassis.moveToPoint(32.663, 46.351, 5000,{.forwards=false},false);
+  intakemotors.trapdoor_pos(2);
+  pros::delay(2000);
+  intakemotors.trapdoor_pos(0);
+  match_loader.set_value(false);
+
+  // BLUE PARK ZONE CLEAR
+  // go up to parking zone
+  chassis.moveToPoint(43.361, 46.656, 5000);
+  chassis.moveToPoint(44.126, 0.807, 5000);
+  chassis.turnToPoint(64.299, 0.196, 5000);
+  // go through front and get blocks out of zone
+  chassis.moveToPoint(64.299, 0.196, 5000);
+  pros::delay(5000); // note to self might have to add jiggle to collect blocks
+  chassis.moveToPoint(44.126, 0.807, 5000, {.forwards=false});
+  // try to reset odom
+  // face away from the park zone
+  chassis.turnToHeading(270,5000);
+  // go backwards to hit park zone
+  chassis.moveToPoint(64.299, 0.196, 1000,{.forwards=false},false);
+  //now we reset pose
+  chassis.setPose(44.126, 0.807, 270);
+
+  // FINISHING MIDDLE GOAL
+  // go to middle and score remaining blocks
+  intakemotors.stop();
+  chassis.moveToPoint(23.646, -23.34, 5000,{},false);
+  intakemotors.moveForward(127);
+  chassis.moveToPoint(14.496, -14.899, 5000,{.forwards=false},false);
+  intakemotors.trapdoor_pos(1);
+  pros::delay(1000);
+  intakemotors.trapdoor_pos(0);
+  
+  // LONG GOAL 2
+  // go to loader
+  chassis.moveToPoint(48.513, -47.076, 5000);
+  chassis.turnToPoint(57.929, -47.486, 5000,{},false);
+  match_loader.set_value(true);
+  chassis.moveToPoint(57.929, -47.486, 5000,{},false);
+  pros::delay(1000);
+
+  // go to opposite side of field
+  chassis.moveToPoint(43.983, -47.344, 5000,{.forwards=false},false);
+  match_loader.set_value(false);
+
+  chassis.moveToPoint(38.784, -57.579, 5000);
+  chassis.turnToPoint(-41.464, -59.216, 5000);
+  chassis.moveToPoint(-41.464, -59.216, 5000);
+  chassis.moveToPoint(-45.149, -47.139, 5000);
+  // score on long goal
+  chassis.turnToPoint(-32.894, -47.958, 5000,{.forwards=false},false);
+  chassis.moveToPoint(-32.894, -47.958, 5000,{.forwards=false},false);
+  intakemotors.trapdoor_pos(2);
+  pros::delay(2000);
+  intakemotors.trapdoor_pos(0);
+  match_loader.set_value(true);
+  // go to loader
+  chassis.moveToPoint(-56.435, -47.139, 5000,{},false);
+  pros::delay(1000);
+  // score on long goal again
+  chassis.moveToPoint(-32.894, -47.958, 5000,{.forwards=false},false);
+  intakemotors.trapdoor_pos(0);
+  pros::delay(2000);
+  match_loader.set_value(false);
+
+  // PARK
+  // allign with the park zone
+  chassis.moveToPoint(-39.604, -1.21, 5000);
+  // go inside
+  chassis.turnToPoint(-61.712, -0.055, 5000);
+  chassis.moveToPoint(-61.712, -0.055, 5000);
+}
+
 // // Red Left
 void Autonomous::Auton1() {
 //   chassis.setPose(0, 0, 0);
@@ -275,7 +392,7 @@ void Autonomous::AutoDrive() {
       square_auto();
       break;
    case SKILLS:
-      Auton5();
+      skills();
       break;
    }
 }
