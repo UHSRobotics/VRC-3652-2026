@@ -3,8 +3,8 @@
 #include "../../include/robot/intake.hpp"
 
 // Default Starting Route
-Autonomous::ROUTINE Autonomous::auton = SAWP;
-std::string Autonomous::autonName = "Solo - AWP";
+Autonomous::ROUTINE Autonomous::auton = SKILLS;
+std::string Autonomous::autonName = "Skills";
 
 Intake intakemotors;
 
@@ -173,108 +173,130 @@ void skills() {
   // MIDDLE 2 BLOCKS
   // grab block from middle and score two red in high middle goal
   chassis.moveToPoint(-32.29, 20.675, 5000);
-  chassis.moveToPoint(-12.45, 13.145, 5000,{.forwards=false},false);
+  chassis.moveToPoint(-11, 12, 5000,{.forwards=false},false);
   intakemotors.trapdoor_pos(1);
   pros::delay(500);
+  intakemotors.trapdoor_pos(2);
+  intakemotors.moveForward(127);
+  pros::delay(100);
   intakemotors.trapdoor_pos(0);
+  chassis.setPose(-9, 9, chassis.getPose().theta);
 
   // LONG GOAL 1
   // go to loader
-  chassis.moveToPoint(-46, 48, 5000);
-  chassis.turnToPoint(-58.202, 50, 5000,{},false);
+  chassis.moveToPoint(-36, 48, 5000);
+  chassis.turnToPoint(-58.202, 48, 5000,{},false);
   match_loader.set_value(true);
   pros::delay(100);
-  chassis.moveToPoint(-58.202, 50, 5000,{},false);
-  pros::delay(1000);
+  chassis.moveToPoint(-58.202, 48, 3000,{.maxSpeed=70},false);
   // go to opposite side of field
-  chassis.moveToPoint(-48.185, 50, 5000,{.forwards=false},false);
+  chassis.moveToPoint(-48.185, 48, 2000,{.forwards=false},false);
+  intakemotors.stop();
   match_loader.set_value(false);
-  chassis.moveToPoint(-41.613, 64, 5000);
+  chassis.moveToPoint(-28, 64, 2000);
   chassis.turnToPoint(43, 64, 5000);
-  chassis.moveToPoint(43, 64, 5000);
-  chassis.moveToPoint(46, 50, 5000);
-  // score on long goal
-  chassis.turnToPoint(29, 50, 5000, {.forwards=false});
-  chassis.moveToPoint(29, 50, 5000, {.forwards=false},false);
-  intakemotors.trapdoor_pos(2);
-  pros::delay(2000);
-  intakemotors.trapdoor_pos(0);
-  // go to loader
   match_loader.set_value(true);
-  chassis.moveToPoint(61.09, 48, 5000,{},false);
+  chassis.moveToPoint(43, 64, 5000);
+  chassis.moveToPoint(46, 49,1000);
+  intakemotors.moveForward(127);
+  // score on long goal
+  chassis.turnToPoint(27, 50, 1000, {.forwards=false});
+  chassis.moveToPoint(26, 50, 5000, {.forwards=false});
   pros::delay(1000);
-  // score on long goal again
-  chassis.moveToPoint(32.663, 48, 5000,{.forwards=false},false);
   intakemotors.trapdoor_pos(2);
-  pros::delay(2000);
+  intakemotors.moveBackward(120);
+  pros::delay(100);
+  intakemotors.moveForward(127);
+  pros::delay(2200);
+  intakemotors.trapdoor_pos(0);
+  chassis.setPose(28.1, 48, 90);
+  // go to loader
+  chassis.moveToPoint(63, 48, 4000,{.maxSpeed = 70},false);
+  // score on long goal again
+  chassis.moveToPoint(26, 48, 5000,{.forwards=false},false);
+  intakemotors.trapdoor_pos(2);
+  pros::delay(2100);
   intakemotors.trapdoor_pos(0);
   match_loader.set_value(false);
-
+  
+  chassis.setPose(28.1, 48, 90);
   // BLUE PARK ZONE CLEAR
-  // go up to parking zone
-  chassis.moveToPoint(43.361, 48, 5000);
-  chassis.moveToPoint(44.126, 0.807, 5000);
-  chassis.turnToPoint(64.299, 0.196, 5000);
+  chassis.moveToPoint(53, 30, 1000, {.minSpeed = 127, .earlyExitRange = 1.0});
+  chassis.turnToHeading(167, 500, {.earlyExitRange = 1.0});
+  intakemotors.moveForward(127); 
+  intakemotors.trapdoor_pos(0);
   // go through front and get blocks out of zone
-  chassis.moveToPoint(64.299, 0.196, 5000);
-  pros::delay(5000); // note to self might have to add jiggle to collect blocks
-  chassis.moveToPoint(44.126, 0.807, 5000, {.forwards=false});
+  chassis.moveToPoint(60, -18, 6000, {.minSpeed = 127});
+  pros::delay(650);
+  match_loader.set_value(true);
+  pros::delay(900);
+  match_loader.set_value(false);
+  chassis.moveToPoint(66, -35, 2000, {.maxSpeed = 120});
   // try to reset odom
-  // face away from the park zone
-  chassis.turnToHeading(270,5000);
-  // go backwards to hit park zone
-  chassis.moveToPoint(64.299, 0.196, 1000,{.forwards=false},false);
-  //now we reset pose
-  chassis.setPose(44.126, 0.807, 270);
-
+  pros::delay(2000);
+  chassis.setPose(62, chassis.getPose().y, chassis.getPose().theta);
+  chassis.turnToHeading(100, 5000);
   // FINISHING MIDDLE GOAL
   // go to middle and score remaining blocks
-  intakemotors.stop();
-  chassis.moveToPoint(23.646, -23.34, 5000,{},false);
-  intakemotors.moveForward(127);
-  chassis.moveToPoint(14.496, -14.899, 5000,{.forwards=false},false);
-  intakemotors.trapdoor_pos(1);
+  chassis.moveToPoint(23, -23, 2000, {.forwards = false}, false);
   pros::delay(1000);
+  chassis.turnToHeading(135, 500);
+  intakemotors.moveForward(120);
+  chassis.moveToPoint(11, -10, 7000,{.forwards=false});
+  pros::delay(1000);
+  chassis.turnToHeading(130, 500);
+  intakemotors.trapdoor_pos(1);
+  pros::delay(2000);
   intakemotors.trapdoor_pos(0);
-  
+
+  //Reset 
+  chassis.setPose(11, -11, 135);
+  pros::delay(100);
+  match_loader.set_value(true);
+  intakemotors.trapdoor_pos(0);
+  intakemotors.moveForward(127);
   // LONG GOAL 2
   // go to loader
-  chassis.moveToPoint(48.513, -47.076, 5000);
-  chassis.turnToPoint(57.929, -47.486, 5000,{},false);
-  match_loader.set_value(true);
-  chassis.moveToPoint(57.929, -47.486, 5000,{},false);
-  pros::delay(1000);
+  chassis.moveToPoint(48, -47, 5000);
+  chassis.turnToPoint(62, -46, 5000,{},false);
+  chassis.moveToPoint(62, -46, 3500,{.maxSpeed = 80},false);
+  intakemotors.stop();
 
   // go to opposite side of field
-  chassis.moveToPoint(43.983, -47.344, 5000,{.forwards=false},false);
+  chassis.moveToPoint(43.983, -49, 5000,{.forwards=false},false);
   match_loader.set_value(false);
-
-  chassis.moveToPoint(38.784, -57.579, 5000);
-  chassis.turnToPoint(-41.464, -59.216, 5000);
-  chassis.moveToPoint(-41.464, -59.216, 5000);
-  chassis.moveToPoint(-45.149, -47.139, 5000);
+  chassis.moveToPoint(38.784, -63, 5000);
+  chassis.turnToPoint(-41.464, -63, 5000);
+  chassis.moveToPoint(-41.464, -63, 5000);
+  chassis.moveToPoint(-45.149, -48, 5000);
   // score on long goal
-  chassis.turnToPoint(-32.894, -47.958, 5000,{.forwards=false},false);
-  chassis.moveToPoint(-32.894, -47.958, 5000,{.forwards=false},false);
+  chassis.turnToPoint(-26, -48, 5000,{.forwards=false},false);
+  chassis.moveToPoint(-26, -48, 5000,{.forwards=false},false);
+  intakemotors.moveForward(127);
   intakemotors.trapdoor_pos(2);
-  pros::delay(2000);
+  pros::delay(2500);
   intakemotors.trapdoor_pos(0);
   match_loader.set_value(true);
   // go to loader
-  chassis.moveToPoint(-56.435, -47.139, 5000,{},false);
-  pros::delay(1000);
+  chassis.moveToPoint(-60, -48, 3500,{.maxSpeed = 70},false);
   // score on long goal again
-  chassis.moveToPoint(-32.894, -47.958, 5000,{.forwards=false},false);
+  chassis.moveToPoint(-26, -49, 5000,{.forwards=false},false);
+  intakemotors.trapdoor_pos(2);
+  pros::delay(1500);
   intakemotors.trapdoor_pos(0);
   pros::delay(2000);
   match_loader.set_value(false);
+  //Reset Odom
+  chassis.setPose(-28.1, -48, 270);
 
   // PARK
-  // allign with the park zone
-  chassis.moveToPoint(-39.604, -1.21, 5000);
-  // go inside
-  chassis.turnToPoint(-61.712, -0.055, 5000);
-  chassis.moveToPoint(-61.712, -0.055, 5000);
+  chassis.moveToPoint(-53, -30, 1000, {.minSpeed = 127, .earlyExitRange = 1.0});
+  chassis.turnToHeading(345, 500, {.earlyExitRange = 1.0});
+  intakemotors.moveForward(127); 
+  intakemotors.trapdoor_pos(0);
+  // go through front and get blocks out of zone
+  chassis.moveToPoint(-65, 0, 6000, {.minSpeed = 127});
+  pros::delay(650);
 }
 
 // // Red Left
