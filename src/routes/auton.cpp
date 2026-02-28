@@ -108,11 +108,11 @@ void sawp(){
     // go to in between long goal and loader
     // also note the y value in the below two lines are absurdly large but it works somehow
     //chassis.turnToPoint(-40, -49, 400);
-    chassis.moveToPoint(-45, -47.75, 650, {.maxSpeed = 120});
-    chassis.moveToPoint(-52, -47.5, 200, {.maxSpeed = 120});
+    chassis.moveToPoint(-45, -47.5, 650, {.maxSpeed = 120});
+    chassis.moveToPoint(-52, -47.6, 200, {.maxSpeed = 120});
     // face loader and go to it        
     //chassis.turnToHeading(270, 500, {}, false);
-    chassis.moveToPoint(-64, -47, 1250,{.maxSpeed = 80}, false);
+    chassis.moveToPoint(-64, -47.6, 1250,{.maxSpeed = 80}, false);
     match_loader.set_value(true);
     // score in long goal
     intakemotors.moveForward(127);
@@ -145,8 +145,8 @@ void sawp(){
     //Continue remaining of Left Rush Auton
     // go to in between long goal and loader
     // also note the y value in the below two lines are absurdly large but it works somehow
-    chassis.moveToPoint(-40, 49.75, 650, {.maxSpeed = 120});
-    chassis.moveToPoint(-52, 49.75, 200, {.maxSpeed = 120, .earlyExitRange = 0.5});
+    chassis.moveToPoint(-40, 49.5, 650, {.maxSpeed = 120});
+    chassis.moveToPoint(-52, 49.5, 200, {.maxSpeed = 120, .earlyExitRange = 0.5});
     match_loader.set_value(true);
     // face loader and go to it        
     //chassis.turnToHeading(270, 500, {}, false);
@@ -217,11 +217,11 @@ void skills() {
   chassis.moveToPoint(26, 48, 5000,{.forwards=false,.maxSpeed=70},false);
   intakemotors.trapdoor_pos(2);
   pros::delay(2100);
-  chassis.setPose(28.1, 48, 90);
+  
+  chassis.setPose(28.1, 48, 90); // for testing leave it here but during skills delete
   intakemotors.trapdoor_pos(0);
   match_loader.set_value(false);
 
-  //chassis.setPose(28.1, 48, 90);
   // BLUE PARK ZONE CLEAR
   chassis.moveToPoint(53, 30, 1000, {.minSpeed = 127, .earlyExitRange = 1.0});
   chassis.turnToHeading(167, 500, {.earlyExitRange = 1.0});
