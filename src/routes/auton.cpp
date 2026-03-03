@@ -3,8 +3,8 @@
 #include "../../include/robot/intake.hpp"
 
 // Default Starting Route
-Autonomous::ROUTINE Autonomous::auton = SAWP;
-std::string Autonomous::autonName = "Solo - AWP";
+Autonomous::ROUTINE Autonomous::auton = SKILLS;
+std::string Autonomous::autonName = "Skills";
 
 Intake intakemotors;
 
@@ -26,19 +26,19 @@ void auton_l(){
     // face loader and go to it        
     //chassis.turnToHeading(270, 500, {}, false);
     chassis.moveToPoint(-52, 46.5, 200, {.maxSpeed = 120, .earlyExitRange = 2.0});
-    chassis.moveToPoint(-64, 46, 1350,{.maxSpeed = 80},false);
+    chassis.moveToPoint(-65, 46, 1350,{.maxSpeed = 70},false);
     match_loader.set_value(true);
     // score in long goal
     intakemotors.moveForward(127);
     intakemotors.trapdoor_pos(0);
-    chassis.moveToPoint(-24, 50, 3000, {.forwards=false, .minSpeed = 80});
+    chassis.moveToPoint(-23, 46.5, 3000, {.forwards=false, .minSpeed = 80});
     pros::delay(400);
     intakemotors.trapdoor_pos(2);
     match_loader.set_value(false);
     // funny alignment for setting up wing push
-    chassis.turnToHeading(330, 1000);
-    chassis.moveToPoint(-40, 60, 1000, {.maxSpeed = 120});
-    chassis.turnToHeading(270, 1000); 
+    chassis.turnToHeading(330, 500);
+    chassis.moveToPoint(-40, 59, 700, {.maxSpeed = 120});
+    chassis.turnToHeading(270, 500); 
     // push le blocks in
     while(true){
         chassis.moveToPoint(-14, 60, 1500, {.forwards = false, .maxSpeed = 80});
@@ -189,9 +189,9 @@ void skills() {
   chassis.turnToPoint(-58.202, 48, 5000,{},false);
   match_loader.set_value(true);
   pros::delay(100);
-  chassis.moveToPoint(-58.202, 48, 3000,{.maxSpeed=70},false);
+  chassis.moveToPoint(-58.202, 47.6, 3000,{.maxSpeed=70},false);
   // go to opposite side of field
-  chassis.moveToPoint(-48.185, 48, 2000,{.forwards=false},false);
+  chassis.moveToPoint(-48.185, 47.6, 2000,{.forwards=false},false);
   intakemotors.stop();
   match_loader.set_value(false);
   chassis.moveToPoint(-28, 64, 2000);
@@ -214,14 +214,14 @@ void skills() {
   intakemotors.moveForward(127); // random moveforward command to prevent intake stopping
   chassis.moveToPoint(63, 48, 4000,{.maxSpeed = 70},false);
   // score on long goal again
-  chassis.moveToPoint(26, 48, 5000,{.forwards=false,.maxSpeed=70},false);
+  chassis.moveToPoint(26, 48.5, 5000,{.forwards=false,.maxSpeed=70},false);
   intakemotors.trapdoor_pos(2);
   pros::delay(2100);
-  chassis.setPose(28.1, 48, 90);
+  
+  chassis.setPose(28.1, 48, 90); // for testing leave it here but during skills delete
   intakemotors.trapdoor_pos(0);
   match_loader.set_value(false);
 
-  //chassis.setPose(28.1, 48, 90);
   // BLUE PARK ZONE CLEAR
   chassis.moveToPoint(53, 30, 1000, {.minSpeed = 127, .earlyExitRange = 1.0});
   chassis.turnToHeading(167, 500, {.earlyExitRange = 1.0});
@@ -233,7 +233,7 @@ void skills() {
   match_loader.set_value(true);
   pros::delay(900);
   match_loader.set_value(false);
-  chassis.moveToPoint(66, -35, 2000, {.maxSpeed = 120});
+  chassis.moveToPoint(64, -35, 2000, {.maxSpeed = 120});
   // try to reset odom
   pros::delay(2000);
   chassis.setPose(62, chassis.getPose().y, chassis.getPose().theta);
@@ -244,7 +244,7 @@ void skills() {
   pros::delay(1000);
   chassis.turnToHeading(135, 500);
   intakemotors.moveForward(120);
-  chassis.moveToPoint(12, -9, 7000,{.forwards=false});
+  chassis.moveToPoint(13, -8, 7000,{.forwards=false});
   pros::delay(1000);
   chassis.turnToHeading(130, 500);
   intakemotors.trapdoor_pos(1);
@@ -416,7 +416,8 @@ void Autonomous::AutoDrive() {
       sawp();
       break;
    case BLUE_LEFT:
-      Auton1();
+      chassis.setPose(0,0,0);
+      chassis.moveToPoint(0, 5, 5000);
       break;
    case BLUE_RIGHT:
       square_auto();

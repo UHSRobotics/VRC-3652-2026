@@ -10,10 +10,10 @@ AutonSelector::AutonSelector(int maxButtons) : maxButtons(maxButtons)
 {
   // Define routes for selection screen (each entry has a name and corresponding route ID)
   routes = {
-      {"Red Left", 1},
-      {"Red Right", 2},
-      {"Blue Left", -1},
-      {"Blue Right", -2},
+      {"Left Rush", 1},
+      {"Right Rush", 2},
+      {"Solo AWP", 3},
+      {"forward", -1},
       {"Skills", 0}};
 }
 
