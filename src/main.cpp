@@ -121,7 +121,7 @@ void opcontrol() {
 		
 		// armM.controlByAmount(DIGITAL_B, customArmMove, armVelocity);
 
-		intake.holdControl(DIGITAL_R1, DIGITAL_R2, DIGITAL_L1, DIGITAL_X);
+		intake.holdControl(DIGITAL_R1, DIGITAL_R2, DIGITAL_X, DIGITAL_L1);
 
 		// Run color sorter
 		// colorSorter.setTargetColor(DONUT_COLOR::BLUE_RING);
