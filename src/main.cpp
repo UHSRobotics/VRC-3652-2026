@@ -97,7 +97,6 @@ void autonomous() {
  */
 
 void opcontrol() {
-  	chassis.setPose(-24, 24, 180);
 	pros::lcd::initialize();
 	// loop forever
 	while (true) {

@@ -3,8 +3,8 @@
 #include "../../include/robot/intake.hpp"
 
 // Default Starting Route
-Autonomous::ROUTINE Autonomous::auton = SKILLS;
-std::string Autonomous::autonName = "Skills";
+Autonomous::ROUTINE Autonomous::auton = SAWP;
+std::string Autonomous::autonName = "Solo - AWP";
 
 Intake intakemotors;
 
@@ -109,15 +109,15 @@ void sawp(){
     // also note the y value in the below two lines are absurdly large but it works somehow
     //chassis.turnToPoint(-40, -49, 400);
     chassis.moveToPoint(-45, -47, 650, {.maxSpeed = 120});
-    chassis.moveToPoint(-52, -46.5, 200, {.maxSpeed = 120, .earlyExitRange = 2.0});
+    chassis.moveToPoint(-52, -47, 200, {.maxSpeed = 120, .earlyExitRange = 2.0});
     // face loader and go to it        
     //chassis.turnToHeading(270, 500, {}, false);
-    chassis.moveToPoint(-64, -46, 1200,{.maxSpeed = 80}, false);
+    chassis.moveToPoint(-64, -46.5, 1200,{.maxSpeed = 80}, false);
     match_loader.set_value(true);
     // score in long goal
     intakemotors.moveForward(127);
     intakemotors.trapdoor_pos(0);
-    chassis.moveToPoint(-24, -48, 2400, {.forwards=false, .minSpeed = 80});
+    chassis.moveToPoint(-24, -47, 2400, {.forwards=false, .minSpeed = 80});
     pros::delay(400);
     intakemotors.trapdoor_pos(2);
     pros::delay(1700);
@@ -145,16 +145,18 @@ void sawp(){
     //Continue remaining of Left Rush Auton
     // go to in between long goal and loader
     // also note the y value in the below two lines are absurdly large but it works somehow
+    
+    //half awp comment out
     chassis.moveToPoint(-40, 50, 650, {.maxSpeed = 120});
-    chassis.moveToPoint(-52, 50, 200, {.maxSpeed = 120, .earlyExitRange = 1.0});
+    chassis.moveToPoint(-52, 50, 200, {.maxSpeed = 120, .earlyExitRange = 0.5});
     match_loader.set_value(true);
     // face loader and go to it        
     //chassis.turnToHeading(270, 500, {}, false);
-    chassis.moveToPoint(-67, 50, 1350,{.maxSpeed = 70},false);
+    chassis.moveToPoint(-67, 49.5, 1350,{.maxSpeed = 70},false);
     // score in long goal
     intakemotors.moveForward(127);
     intakemotors.trapdoor_pos(0);
-    chassis.moveToPoint(-24, 48.7, 3000, {.forwards=false, .maxSpeed = 100});
+    chassis.moveToPoint(-24, 47.75, 3000, {.forwards=false, .maxSpeed = 100});
     pros::delay(500);
     intakemotors.trapdoor_pos(2);
     match_loader.set_value(false);
@@ -441,6 +443,7 @@ void Autonomous::AutonSwitcher(int autonNum) {
   case 3:
     Autonomous::autonName = "Solo - AWP";
     Autonomous::auton = SAWP;
+    break;
   case -1:
     Autonomous::autonName = "Blue Left";
     Autonomous::auton = BLUE_LEFT;
@@ -452,6 +455,7 @@ void Autonomous::AutonSwitcher(int autonNum) {
   case 0:
     Autonomous::autonName = "Skills";
     Autonomous::auton = SKILLS;
+    break;
   }
-  printf("Current auton: \n", Autonomous::autonName);
+  printf("Current auton: %s\n", Autonomous::autonName.c_str());
 }
